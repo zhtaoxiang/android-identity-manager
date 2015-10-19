@@ -11,7 +11,7 @@
     <string name="submit">Submit</string>
     <string name="confirm">OK</string>
     <string name="token_success">Please check your mailbox with further instructions how to proceed.</string>
-    <string name="token_fail">The email you specified is not recognized to belong to one of the NDN Testbed sites.</string>
+    <string name="token_fail">Token request failed.</string>
     <string name="email">Email address:</string>
 
     <string name="title_activity_submit_identity_request">Submit Identity Request</string>

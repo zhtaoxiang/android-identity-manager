@@ -58,7 +58,7 @@ public class GenerateIdentity extends Activity {
                         try {
                             JSONObject jsResponse = new JSONObject(response);
                             DialogFragment newFragment;
-                            if (jsResponse.get("status") == 0)
+                            if (jsResponse.getInt("status") == 200)
                                 newFragment = new MessageDialogFragment(R.string.token_success);
                             else
                                 newFragment = new MessageDialogFragment(R.string.token_fail);
@@ -87,7 +87,6 @@ public class GenerateIdentity extends Activity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("email", email);
-                params.put("flag", MainActivity.FLAG);
 
                 return params;
             }

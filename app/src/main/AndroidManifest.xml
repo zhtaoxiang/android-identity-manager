@@ -36,6 +36,9 @@
                 <data
                     android:host="ndncert.named-data.net"
                     android:scheme="http" />
+                <data
+                    android:host="memoria.ndn.ucla.edu"
+                    android:scheme="http" />
 
                 <action android:name="android.intent.action.VIEW" />
 

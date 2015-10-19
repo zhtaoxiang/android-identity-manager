@@ -55,6 +55,14 @@ public class SubmitIdentityRequest extends Activity {
         Intent intent = getIntent();
         mEmail = intent.getStringExtra(UriHandler.EXTRA_MESSAGE_EMAIL);
         mToken = intent.getStringExtra(UriHandler.EXTRA_MESSAGE_TOKEN);
+        assignedNamespace = intent.getStringExtra(UriHandler.EXTRA_MESSAGE_NAMESPACE);
+        try {
+            Log.e("zhehao", mEmail);
+            Log.e("zhehao", mToken);
+            Log.e("zhehao", assignedNamespace);
+        } catch (Exception e) {
+            Log.e("zhehao", e.getMessage());
+        }
 
         sendHttpGetRequest();
     }
@@ -67,18 +75,9 @@ public class SubmitIdentityRequest extends Activity {
         EditText nameText = (EditText) findViewById(R.id.nameText);
         String name = nameText.getText().toString();
 
-        EditText homepageText = (EditText) findViewById(R.id.homepageText);
-        String homepage = homepageText.getText().toString();
-
-        EditText departmentText = (EditText) findViewById(R.id.departmentText);
-        String department = departmentText.getText().toString();
-
-        EditText advisorText = (EditText) findViewById(R.id.advisorText);
-        String advisor = advisorText.getText().toString();
-
         try {
             String certification = generateKey();
-            sendHttpPostRequest(name, homepage, department, advisor, certification);
+            sendHttpPostRequest(name, certification);
         } catch (Exception e) {
             Log.e(getResources().getString(R.string.app_name), e.getMessage());
             finish();
@@ -86,27 +85,8 @@ public class SubmitIdentityRequest extends Activity {
     }
 
     ////////////////////////////////////////////////////////////
-    private String inferIdentity() {
-        String identity = "/ndn";
-        String items[] = mEmail.split("@");
-        String user = items[0];
-        String dns = items[1];
-
-        List<String> ss = Arrays.asList(dns.split("\\."));
-        Collections.reverse(ss);
-        StringBuffer domain = new StringBuffer();
-        for (String s : ss) {
-            domain.append("/");
-            domain.append(s);
-        }
-
-        identity += domain.toString() + "/" + user;
-
-        return identity;
-    }
-
     private String generateKey() throws net.named_data.jndn.security.SecurityException {
-        String identity = inferIdentity();
+        String identity = assignedNamespace;
 
         String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
         String certDirPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.CERT_DIR;
@@ -116,6 +96,7 @@ public class SubmitIdentityRequest extends Activity {
         IdentityManager identityManager = new IdentityManager(identityStorage, privateKeyStorage);
 
         Name identityName = new Name(identity);
+        Log.e("zhehao", identity);
         Name keyName = identityManager.generateRSAKeyPairAsDefault(identityName, true);
         IdentityCertificate certificate = identityManager.selfSign(keyName);
 
@@ -130,15 +111,16 @@ public class SubmitIdentityRequest extends Activity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = mURL + "?email=" + email + "&token=" + token + "&flag=mobileApp";
+        String url = mURL + "?email=" + email + "&token=" + token;
         // Request a string response from the provided URL.
         JsonObjectRequest jsObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            EditText organizationText = (EditText) findViewById(R.id.organizationText);
-                            organizationText.setText(response.getString("organization"));
+                            // We don't care about organization here
+                            //EditText organizationText = (EditText) findViewById(R.id.organizationText);
+                            //organizationText.setText(response.getString("organization"));
                         } catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());
                             finish();
@@ -161,7 +143,7 @@ public class SubmitIdentityRequest extends Activity {
         queue.add(jsObjectRequest);
     }
 
-    private void sendHttpPostRequest(final String name, final String homepage, final String department, final String advisor, final String certification) {
+    private void sendHttpPostRequest(final String name, final String certification) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -174,11 +156,11 @@ public class SubmitIdentityRequest extends Activity {
                             JSONObject jsResponse = new JSONObject(response);
 
                             DialogFragment newFragment;
-                            if (jsResponse.get("status") == 0) {
+                            if (jsResponse.getInt("status") == 200) {
                                 newFragment = new MessageDialogFragment(R.string.submit_success);
                                 newFragment.show(getFragmentManager(), "message");
                             }
-                            else if (jsResponse.get("status") == 2) {
+                            else if (jsResponse.getInt("status") == 2) {
                                 newFragment = new MessageDialogFragment(R.string.submit_fail);
                                 newFragment.show(getFragmentManager(), "message");
                             }
@@ -200,7 +182,7 @@ public class SubmitIdentityRequest extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error.networkResponse != null) {
-                            String toastString = "Error code: " + error.networkResponse.statusCode;
+                            String toastString = "Error code: " + error.networkResponse.statusCode + "; msg: " + new String(error.networkResponse.data);
                             Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
 
                             finish();
@@ -210,17 +192,10 @@ public class SubmitIdentityRequest extends Activity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("flag", "mobileApp");
+                params.put("full_name", name);
                 params.put("email", mEmail);
                 params.put("token", mToken);
-                params.put("fullname", name);
-                if (homepage.length() != 0)
-                    params.put("homeurl", homepage);
-                if (department.length() != 0)
-                    params.put("group", department);
-                if (advisor.length() != 0)
-                    params.put("advisor", advisor);
-                params.put("cert-request", certification);
+                params.put("cert_request", certification);
 
                 return params;
             }
@@ -233,4 +208,5 @@ public class SubmitIdentityRequest extends Activity {
     ////////////////////////////////////////////////////////////
     private String mEmail;
     private String mToken;
+    private String assignedNamespace;
 }

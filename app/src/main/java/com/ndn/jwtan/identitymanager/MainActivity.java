@@ -12,7 +12,9 @@ public class MainActivity extends Activity {
 
     protected static final String DB_NAME = "certDb.db";
     protected static final String CERT_DIR = "certDir";
-    protected static final String HOST = "http://131.179.210.91:5000";
+    // TODO: Stuck at submit email address without timeout if HOST misconfigured.
+    // On memoria, my ICN chat cert runs on 5000, while the openmhealth cert runs on 5001
+    protected static final String HOST = "http://memoria.ndn.ucla.edu:5001";
     protected static final String FLAG = "mobileApp";
 
     @Override

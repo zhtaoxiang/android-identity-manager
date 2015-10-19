@@ -13,6 +13,7 @@ public class UriHandler extends Activity {
     public final static String EXTRA_MESSAGE_EMAIL = "com.ndn.jwtan.identitymanager.MESSAGE_EMAIL";
     public final static String EXTRA_MESSAGE_TOKEN = "com.ndn.jwtan.identitymanager.MESSAGE_TOKEN";
     public final static String EXTRA_MESSAGE_NAME = "com.ndn.jwtan.identitymanager.MESSAGE_NAME";
+    public final static String EXTRA_MESSAGE_NAMESPACE = "com.ndn.jwtan.identitymanager.MESSAGE_NAMESPACE";
 
     private final static String submitFirst = "cert-requests";
     private final static String submitSecond = "submit";
@@ -36,10 +37,13 @@ public class UriHandler extends Activity {
         if (first.equals(submitFirst) && second.equals(submitSecond)) {
             String email = data.getQueryParameter("email");
             String token = data.getQueryParameter("token");
+            // Note: is this a good approach, sending intended namespace in email? Or should we do it in a two-step query?
+            String namespace = data.getQueryParameter("namespace");
 
             Intent intent = new Intent(this, SubmitIdentityRequest.class);
             intent.putExtra(EXTRA_MESSAGE_EMAIL, email);
             intent.putExtra(EXTRA_MESSAGE_TOKEN, token);
+            intent.putExtra(EXTRA_MESSAGE_NAMESPACE, namespace);
             startActivity(intent);
         }
         else if (first.equals(installFirst) && second.equals(installSecond)) {
