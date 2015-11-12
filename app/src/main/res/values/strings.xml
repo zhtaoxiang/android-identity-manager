@@ -37,4 +37,5 @@
     <string name="title_activity_display_apps">Display Apps</string>
 
     <string name="title_activity_sign_certificate">Identity Manager</string>
+    <string name="title_activity_authorize_app">AuthorizeApp</string>
 </resources>
