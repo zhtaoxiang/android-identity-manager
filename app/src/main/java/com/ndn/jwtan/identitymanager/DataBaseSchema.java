@@ -21,4 +21,12 @@ public final class DataBaseSchema {
         public static final String COLUMN_NAME_APP = "app";
         public static final String COLUMN_NAME_CERTIFICATE = "certificate";
     }
+
+    public static abstract class DeviceEntry implements BaseColumns {
+        public static final String TABLE_NAME = "device_ids";
+        public static final String COLUMN_NAME_IDENTITY = "identity";
+        // The device name is redundant here, as it's also represented in the identity name; adding this here could make query by device name easier...
+        public static final String COLUMN_NAME_DEVICE = "device";
+        public static final String COLUMN_NAME_CERTIFICATE = "certificate";
+    }
 }

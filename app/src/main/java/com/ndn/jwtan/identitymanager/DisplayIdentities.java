@@ -14,31 +14,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import android.util.Log;
 
 public class DisplayIdentities extends ListActivity {
 
     public final static String EXTRA_MESSAGE_IDENTITY = "com.ndn.jwtan.identitymanager.MESSAGE_IDENTITY";
 
+    // Here instead of the user identities that we have locally,
+    // we really want to display the list of device identities, as we have public keys for those,
+    // and can use those for signing application data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
+
         super.onCreate(savedInstanceState);
 
         // Establish Database connection
+        Log.e("zhehao", "test");
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Log.e("zhehao", "test after");
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY + " DESC";
+                DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY + " DESC";
 
         String[] projection = {
-                DataBaseSchema.IdentityEntry._ID,
-                DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY,
-                DataBaseSchema.IdentityEntry.COLUMN_NAME_CERTIFICATE
+                DataBaseSchema.DeviceEntry._ID,
+                DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY,
+                DataBaseSchema.DeviceEntry.COLUMN_NAME_CERTIFICATE
         };
 
         Cursor c = db.query(
-                DataBaseSchema.IdentityEntry.TABLE_NAME,  // The table to query
+                DataBaseSchema.DeviceEntry.TABLE_NAME,  // The table to query
                 projection,                               // The columns to return
                 null,                                     // The columns for the WHERE clause
                 null,                                     // The values for the WHERE clause
@@ -49,7 +57,7 @@ public class DisplayIdentities extends ListActivity {
 
 
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY, DataBaseSchema.IdentityEntry.COLUMN_NAME_CERTIFICATE};
+        String[] fromColumns = {DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY, DataBaseSchema.DeviceEntry.COLUMN_NAME_CERTIFICATE};
         int[] toViews = {R.id.item, R.id.description}; // The TextView in simple_list_item_1
 
         // Create an empty adapter we will use to display the loaded data.

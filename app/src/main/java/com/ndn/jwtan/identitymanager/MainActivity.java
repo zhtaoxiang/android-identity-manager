@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.util.Log;
 
 
 public class MainActivity extends Activity {
@@ -54,6 +55,11 @@ public class MainActivity extends Activity {
     /** Called when the user clicks the trace all identities button */
     public void traceIdentities(View view) {
         Intent intent = new Intent(this, DisplayIdentities.class);
+        startActivity(intent);
+    }
+
+    public void debugBtnClick(View view) {
+        Intent intent = new Intent(this, InstallCertificate.class);
         startActivity(intent);
     }
 }

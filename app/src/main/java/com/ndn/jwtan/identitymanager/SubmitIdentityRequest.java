@@ -96,7 +96,7 @@ public class SubmitIdentityRequest extends Activity {
         IdentityManager identityManager = new IdentityManager(identityStorage, privateKeyStorage);
 
         Name identityName = new Name(identity);
-        Log.e("zhehao", identity);
+
         Name keyName = identityManager.generateRSAKeyPairAsDefault(identityName, true);
         IdentityCertificate certificate = identityManager.selfSign(keyName);
 

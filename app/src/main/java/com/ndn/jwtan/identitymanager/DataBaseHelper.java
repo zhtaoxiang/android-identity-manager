@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
@@ -33,6 +34,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     DataBaseSchema.AppEntry.COLUMN_NAME_APP + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.AppEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";
 
+    private static final String SQL_CREATE_DEVICES =
+            "CREATE TABLE " + DataBaseSchema.DeviceEntry.TABLE_NAME + " (" +
+                    DataBaseSchema.DeviceEntry._ID + " INTEGER PRIMARY KEY," +
+                    DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY + TEXT_TYPE + COMMA_SEP +
+                    DataBaseSchema.DeviceEntry.COLUMN_NAME_DEVICE + TEXT_TYPE + COMMA_SEP +
+                    DataBaseSchema.DeviceEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";
+
+    private static final String SQL_DELETE_DEVICES =
+            "DROP TABLE IF EXISTS " + DataBaseSchema.DeviceEntry.TABLE_NAME;
+
     private static final String SQL_DELETE_APPS =
             "DROP TABLE IF EXISTS " + DataBaseSchema.AppEntry.TABLE_NAME;
 
@@ -43,7 +54,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_IDENTITES);
+        db.execSQL(SQL_CREATE_DEVICES);
         db.execSQL(SQL_CREATE_APPS);
+        Log.d("zhehao", "db created");
     }
 
     @Override
@@ -51,6 +64,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_IDENTITIES);
+        db.execSQL(SQL_DELETE_DEVICES);
         db.execSQL(SQL_DELETE_APPS);
         onCreate(db);
     }
