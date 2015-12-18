@@ -107,14 +107,20 @@ public class InstallCertificate extends Activity {
                             ContentValues values = new ContentValues();
                             Name keyName = certificate.getPublicKeyName();
                             Name identityName = keyName.getPrefix(keyName.size() - 1);
-                            values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY, identityName.toUri());
                             values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_CERTIFICATE, certificate.getName().toUri());
+                            values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_APPROVED, true);
 
                             // Insert the new row, returning the primary key value of the new row
-                            db.insert(
+                            int res = db.update(
                                     DataBaseSchema.IdentityEntry.TABLE_NAME,
-                                    null,
-                                    values);
+                                    values,
+                                    DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY + " = '" + identityName.toUri() + "'",
+                                    null);
+
+                            if (res != 1) {
+                                Log.e(getResources().getString(R.string.app_name),
+                                        "Unexpected number of updates: " + Integer.toString(res));
+                            }
 
                             // Upon successful user identity request, try generating device identity
                             try {

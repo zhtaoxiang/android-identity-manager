@@ -11,32 +11,38 @@ import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "identityManager.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
+    private static final String BOOL_TYPE = " BOOLEAN";
+
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_IDENTITES =
             "CREATE TABLE " + DataBaseSchema.IdentityEntry.TABLE_NAME + " (" +
-                    DataBaseSchema.IdentityEntry._ID + " INTEGER PRIMARY KEY," +
+                    DataBaseSchema.IdentityEntry._ID + " " + INTEGER_TYPE + " PRIMARY KEY," +
                     DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY + TEXT_TYPE + " UNIQUE," +
-                    DataBaseSchema.IdentityEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";
+                    DataBaseSchema.IdentityEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ", " +
+                    DataBaseSchema.IdentityEntry.COLUMN_NAME_APPROVED + BOOL_TYPE + ", " +
+                    DataBaseSchema.IdentityEntry.COLUMN_NAME_CAPTION + TEXT_TYPE + ", " +
+                    DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE + TEXT_TYPE +
+                    ")";
 
     private static final String SQL_DELETE_IDENTITIES =
             "DROP TABLE IF EXISTS " + DataBaseSchema.IdentityEntry.TABLE_NAME;
 
     private static final String SQL_CREATE_APPS =
             "CREATE TABLE " + DataBaseSchema.AppEntry.TABLE_NAME + " (" +
-                    DataBaseSchema.AppEntry._ID + " INTEGER PRIMARY KEY," +
+                    DataBaseSchema.AppEntry._ID + " " + INTEGER_TYPE + " PRIMARY KEY," +
                     DataBaseSchema.AppEntry.COLUMN_NAME_IDENTITY + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.AppEntry.COLUMN_NAME_APP + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.AppEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";
 
     private static final String SQL_CREATE_DEVICES =
             "CREATE TABLE " + DataBaseSchema.DeviceEntry.TABLE_NAME + " (" +
-                    DataBaseSchema.DeviceEntry._ID + " INTEGER PRIMARY KEY," +
+                    DataBaseSchema.DeviceEntry._ID + " " + INTEGER_TYPE + " PRIMARY KEY," +
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_DEVICE + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";

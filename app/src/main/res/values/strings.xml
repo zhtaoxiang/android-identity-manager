@@ -3,11 +3,11 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
-    <string name="generate_identity">Generate a new identity</string>
+    <string name="generate_identity">Create an ID</string>
     <string name="trace_identity">Trace all identities</string>
     <string name="debug_button">Debug</string>
 
-    <string name="title_activity_generate_identity">Generate Identity</string>
+    <string name="title_activity_generate_identity">Create an ID</string>
     <string name="dialog_title">Message</string>
     <string name="submit">Submit</string>
     <string name="confirm">OK</string>

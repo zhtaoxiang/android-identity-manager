@@ -10,13 +10,19 @@ public final class DataBaseSchema {
     /* Inner class that defines the table contents */
     public static abstract class IdentityEntry implements BaseColumns {
         public static final String TABLE_NAME = "identities";
+
         public static final String COLUMN_NAME_IDENTITY = "identity";
         public static final String COLUMN_NAME_CERTIFICATE = "certificate";
+
+        public static final String COLUMN_NAME_APPROVED = "approved";
+        public static final String COLUMN_NAME_CAPTION = "caption";
+        public static final String COLUMN_NAME_PICTURE = "picture";
     }
 
     /* Inner class that defines the table contents */
     public static abstract class AppEntry implements BaseColumns {
         public static final String TABLE_NAME = "apps";
+
         public static final String COLUMN_NAME_IDENTITY = "identity";
         public static final String COLUMN_NAME_APP = "app";
         public static final String COLUMN_NAME_CERTIFICATE = "certificate";

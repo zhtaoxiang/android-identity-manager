@@ -30,10 +30,8 @@ public class DisplayIdentities extends ListActivity {
         super.onCreate(savedInstanceState);
 
         // Establish Database connection
-        Log.e("zhehao", "test");
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Log.e("zhehao", "test after");
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =

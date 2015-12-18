@@ -57,9 +57,4 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, DisplayIdentities.class);
         startActivity(intent);
     }
-
-    public void debugBtnClick(View view) {
-        Intent intent = new Intent(this, InstallCertificate.class);
-        startActivity(intent);
-    }
 }

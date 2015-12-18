@@ -2,6 +2,8 @@ package com.ndn.jwtan.identitymanager;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,8 @@ import java.util.Map;
 public class GenerateIdentity extends Activity {
 
     private final static String mURL = MainActivity.HOST + "/tokens/request/";
+    private String caption = "";
+    private String picture = "";
 
     ////////////////////////////////////////////////////////////
     @Override
@@ -42,6 +46,9 @@ public class GenerateIdentity extends Activity {
         EditText editText = (EditText) findViewById(R.id.emailText);
         String email = editText.getText().toString();
 
+        this.caption = "caption";
+        this.picture = "picture";
+
         sendHttpRequest(email);
     }
 
@@ -49,6 +56,9 @@ public class GenerateIdentity extends Activity {
     private void sendHttpRequest(final String email) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
+        // for passing into the new Response.Listener
+        final String caption = this.caption;
+        final String picture = this.picture;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, mURL,
@@ -58,10 +68,27 @@ public class GenerateIdentity extends Activity {
                         try {
                             JSONObject jsResponse = new JSONObject(response);
                             DialogFragment newFragment;
-                            if (jsResponse.getInt("status") == 200)
+                            if (jsResponse.getInt("status") == 200) {
                                 newFragment = new MessageDialogFragment(R.string.token_success);
-                            else
+
+                                DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+                                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                                // Insert the new row, returning the primary key value of the new row
+                                ContentValues values = new ContentValues();
+                                values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY, jsResponse.getString("assigned_namespace"));
+                                values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_APPROVED, false);
+                                values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_CAPTION, caption);
+                                values.put(DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE, picture);
+
+                                db.insert(
+                                        DataBaseSchema.IdentityEntry.TABLE_NAME,
+                                        null,
+                                        values);
+                            }
+                            else {
                                 newFragment = new MessageDialogFragment(R.string.token_fail);
+                            }
 
                             newFragment.show(getFragmentManager(), "message");
                         }
