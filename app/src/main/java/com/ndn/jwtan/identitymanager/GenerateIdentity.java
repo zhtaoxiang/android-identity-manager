@@ -1,10 +1,10 @@
 package com.ndn.jwtan.identitymanager;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -24,18 +23,53 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 
-public class GenerateIdentity extends Activity {
+public class GenerateIdentity extends AppCompatActivity {
 
     private final static String mURL = MainActivity.HOST + "/tokens/request/";
     private String caption = "";
     private String picture = "";
+
+    private UICustomViewPager viewPager;
 
     ////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_identity);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        viewPager = (UICustomViewPager) findViewById(R.id.pager);
+        final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        /*
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        */
     }
 
     public void submitEmail(View view) {
@@ -50,6 +84,22 @@ public class GenerateIdentity extends Activity {
         this.picture = "picture";
 
         sendHttpRequest(email);
+    }
+
+    public void tab1Click(View view) {
+        viewPager.setCurrentItem(1);
+    }
+
+    public void declineClick(View view) {
+
+    }
+
+    public void tab2Click(View view) {
+        viewPager.setCurrentItem(2);
+    }
+
+    public void tab0Click(View view) {
+        viewPager.setCurrentItem(0);
     }
 
     ////////////////////////////////////////////////////////////

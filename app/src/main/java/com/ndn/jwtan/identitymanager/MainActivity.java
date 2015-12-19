@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
 
-
 public class MainActivity extends Activity {
 
     protected static final String DB_NAME = "certDb.db";

@@ -24,7 +24,7 @@
         <activity
             android:name=".GenerateIdentity"
             android:label="@string/title_activity_generate_identity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".SubmitIdentityRequest"

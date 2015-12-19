@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ndn.jwtan.identitymanager.UICreateOpenmHealthIDInputDialog"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/email" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/identity_caption"
+        android:id="@+id/TextView2" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/idNameText" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/buttonDecline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:onClick="tab0Click" />
+
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_continue"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:onClick="tab2Click" />
+    </LinearLayout>
+
+</LinearLayout>
