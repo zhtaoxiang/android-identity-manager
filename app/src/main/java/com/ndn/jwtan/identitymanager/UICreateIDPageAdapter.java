@@ -3,6 +3,7 @@ package com.ndn.jwtan.identitymanager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.MotionEvent;
 
 public class UICreateIDPageAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
