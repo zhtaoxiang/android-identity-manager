@@ -13,14 +13,13 @@ Dec 18, 2015
   * Launch application, choose "Create an ID" 
   * Accept the terms of service
   * Put your email address and give the identity a name (Just a name for user rememberance, has nothing to do with NDN name) 
-  * Submit token request
+  * Submit token request (needn't select one of the identity pictures for now)
   * Check email for the subject "[NDN Open mHealth Certification] request confirmation", open the link with the option "open link in ID manager"
   * Put your name and submit (Would remove "full name" if not needed? For now it's the "subject name" field in the cert, but could use the user given name from previous step instead)
   * Check email for the subject "[NDN Open mHealth Certification] certificate issued", open the link with the option "open link in ID manager", and click Ok after the successful installation message shows up
-* To see what identities are created
-  * Launch application, choose "Trace all identities"
-* To test with identity selection in the ndnfit application
-  * Launch ndnfit, click Ok and the user would be redirected to the same view as "Trace all identities", and is able to select an identity
+* To see what identities are created: Launch application, choose "Trace all identities"
+* To test with identity selection in the ndnfit application (currently in master branch of https://github.com/zhehaowang/ndnfit, could be moved in recent future): Launch ndnfit, click Ok and the user would be redirected to the same view as "Trace all identities", and is able to select an identity
+* To see the list of issued identities, go to http://memoria.ndn.ucla.edu:5001/cert/list/html
 
 ### TODOs:
 * Conforming with Dustin UI
