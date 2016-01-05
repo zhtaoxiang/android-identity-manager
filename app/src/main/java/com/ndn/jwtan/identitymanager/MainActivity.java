@@ -2,13 +2,19 @@ package com.ndn.jwtan.identitymanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import android.widget.SimpleCursorAdapter;
+
+public class MainActivity extends AppCompatActivity {
 
     protected static final String DB_NAME = "certDb.db";
     protected static final String CERT_DIR = "certDir";
@@ -21,6 +27,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getIdentities();
     }
 
     @Override
@@ -46,9 +54,54 @@ public class MainActivity extends Activity {
     }
 
     /** Called when the user clicks the generate a new identity button */
-    public void generateIdentity(View view) {
+    public void generateOrViewIdentity(View view) {
         Intent intent = new Intent(this, GenerateIdentity.class);
         startActivity(intent);
+    }
+
+    public void getIdentities() {
+        String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
+
+        // Establish Database connection
+        DataBaseHelper dbHelper = new DataBaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY + " DESC";
+
+        String[] projection = {
+                DataBaseSchema.IdentityEntry._ID,
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_CAPTION,
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE
+        };
+
+        String[] whereClause = {
+                "1"
+        };
+
+        Cursor c = db.query(
+                DataBaseSchema.IdentityEntry.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_APPROVED + "=?",                                     // The columns for the WHERE clause
+                whereClause,                              // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        Integer idx = 0;
+        while (c.moveToNext()) {
+            Log.d("zhehao", c.getString(1));
+            Log.d("zhehao", c.getString(2));
+            String tvId = "tv" + idx.toString();
+            TextView tv = (TextView)this.findViewById(getResources().getIdentifier(tvId, "id", getPackageName()));
+            tv.setText(c.getString(1));
+            idx += 1;
+        }
+
+        c.close();
+        db.close();
     }
 
     /** Called when the user clicks the trace all identities button */
