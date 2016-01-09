@@ -5,10 +5,14 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,14 +48,42 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 
-public class InstallCertificate extends Activity {
+public class InstallCertificate extends AppCompatActivity {
 
     private static final String mURL = MainActivity.HOST + "/cert/get/";
+    private UICustomViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_install_certificate);
+        setContentView(R.layout.activity_generate_token_and_identity);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Step 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Step 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Step 3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Step 4"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        viewPager = (UICustomViewPager) findViewById(R.id.pager);
+        final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.please_wait));
+
+        // Disabling clicking on tabs to switch
+        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
+
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        viewPager.setCurrentItem(3);
 
         // Get the message from the intent
         Intent intent = getIntent();
@@ -62,10 +94,6 @@ public class InstallCertificate extends Activity {
     }
 
     ////////////////////////////////////////////////////////////
-    public void okay(View view) {
-        finish();
-    }
-
     private void sendHttpGetRequest() {
         final String name = mName;
 
@@ -90,8 +118,10 @@ public class InstallCertificate extends Activity {
                         try {
                             data.wireDecode(blob);
                             IdentityCertificate certificate = new IdentityCertificate(data);
-                            TextView organizationText = (TextView) findViewById(R.id.installComplete);
-                            organizationText.setText("Certificate installed: " + certificate.getName().toUri());
+
+                            String hint = "Certificate installed: " + certificate.getName().toUri();
+                            TextView hintText = (TextView) findViewById(R.id.step4Hint);
+                            hintText.setText(hint);
 
                             String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
                             IdentityStorage identityStorage = new AndroidSqlite3IdentityStorage(dbPath);

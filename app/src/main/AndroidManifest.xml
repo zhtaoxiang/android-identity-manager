@@ -24,13 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GenerateIdentity"
-            android:label="@string/title_activity_generate_identity"
+            android:name=".GenerateToken"
+            android:label="@string/title_activity_generate_token"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
-            android:name=".SubmitIdentityRequest"
-            android:label="@string/title_activity_submit_identity_request"
+            android:name=".GenerateIdentity"
+            android:label="@string/title_activity_generate_identity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
@@ -58,7 +58,7 @@
         <activity
             android:name=".InstallCertificate"
             android:label="@string/title_activity_install_certificate"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".DisplayApps"

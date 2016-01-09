@@ -7,7 +7,8 @@
     <string name="trace_identity">Trace all identities</string>
     <string name="debug_button">Debug</string>
 
-    <string name="title_activity_generate_identity">Create an ID</string>
+    <string name="title_activity_generate_token">Create an ID</string>
+    <string name="title_activity_generate_identity">Request confirmation</string>
     <string name="dialog_title">Message</string>
     <string name="submit">Submit</string>
     <string name="confirm">OK</string>

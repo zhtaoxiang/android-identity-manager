@@ -1,6 +1,5 @@
 package com.ndn.jwtan.identitymanager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
 import android.widget.TextView;
-
-import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         if ((String)fab.getTag() == slotTaken) {
             traceIdentities(fab);
         } else {
-            Intent intent = new Intent(this, GenerateIdentity.class);
+            Intent intent = new Intent(this, GenerateToken.class);
             startActivity(intent);
         }
     }

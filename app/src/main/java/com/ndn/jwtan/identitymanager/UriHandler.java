@@ -40,7 +40,7 @@ public class UriHandler extends Activity {
             // Note: is this a good approach, sending intended namespace in email? Or should we do it in a two-step query?
             String namespace = data.getQueryParameter("namespace");
 
-            Intent intent = new Intent(this, SubmitIdentityRequest.class);
+            Intent intent = new Intent(this, GenerateIdentity.class);
             intent.putExtra(EXTRA_MESSAGE_EMAIL, email);
             intent.putExtra(EXTRA_MESSAGE_TOKEN, token);
             intent.putExtra(EXTRA_MESSAGE_NAMESPACE, namespace);
