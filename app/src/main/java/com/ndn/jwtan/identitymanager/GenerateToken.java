@@ -161,6 +161,12 @@ public class GenerateToken extends AppCompatActivity {
         v.invalidate();
     }
 
+    public void returnClick(View view) {
+        Intent i = new Intent(GenerateToken.this, MainActivity.class);
+        startActivity(i);
+        return;
+    }
+
     public void tab1Click(View view) {
         viewPager.setCurrentItem(1);
     }

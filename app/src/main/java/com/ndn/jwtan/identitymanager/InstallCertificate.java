@@ -93,6 +93,12 @@ public class InstallCertificate extends AppCompatActivity {
         sendHttpGetRequest();
     }
 
+    public void returnClick(View view) {
+        Intent i = new Intent(InstallCertificate.this, MainActivity.class);
+        startActivity(i);
+        return;
+    }
+
     ////////////////////////////////////////////////////////////
     private void sendHttpGetRequest() {
         final String name = mName;
@@ -118,10 +124,6 @@ public class InstallCertificate extends AppCompatActivity {
                         try {
                             data.wireDecode(blob);
                             IdentityCertificate certificate = new IdentityCertificate(data);
-
-                            String hint = "Certificate installed: " + certificate.getName().toUri();
-                            TextView hintText = (TextView) findViewById(R.id.step4Hint);
-                            hintText.setText(hint);
 
                             String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
                             IdentityStorage identityStorage = new AndroidSqlite3IdentityStorage(dbPath);
@@ -158,6 +160,10 @@ public class InstallCertificate extends AppCompatActivity {
                             } catch (SecurityException e) {
                                 Log.e(getResources().getString(R.string.app_name), e.getMessage());
                             }
+
+                            String hint = "Certificate installed: " + certificate.getName().toUri();
+                            TextView hintText = (TextView) findViewById(R.id.step4Hint);
+                            hintText.setText(hint);
                         } catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());
                         }

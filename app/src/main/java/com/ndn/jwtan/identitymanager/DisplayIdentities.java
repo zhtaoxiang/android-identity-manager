@@ -25,8 +25,6 @@ public class DisplayIdentities extends ListActivity {
     // and can use those for signing application data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
-
         super.onCreate(savedInstanceState);
 
         // Establish Database connection

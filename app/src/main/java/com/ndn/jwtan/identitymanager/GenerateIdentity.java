@@ -143,6 +143,13 @@ public class GenerateIdentity extends AppCompatActivity {
         }
     }
 
+    // TODO: check what if the returns from GenerateId, GenerateToken, and InstallCert do different things?
+    public void returnClick(View view) {
+        Intent i = new Intent(GenerateIdentity.this, MainActivity.class);
+        startActivity(i);
+        return;
+    }
+
     ////////////////////////////////////////////////////////////
     private String generateKey() throws net.named_data.jndn.security.SecurityException {
         String identity = assignedNamespace;

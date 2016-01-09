@@ -30,9 +30,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE + TEXT_TYPE +
                     ")";
 
-    private static final String SQL_DELETE_IDENTITIES =
-            "DROP TABLE IF EXISTS " + DataBaseSchema.IdentityEntry.TABLE_NAME;
-
     private static final String SQL_CREATE_APPS =
             "CREATE TABLE " + DataBaseSchema.AppEntry.TABLE_NAME + " (" +
                     DataBaseSchema.AppEntry._ID + " " + INTEGER_TYPE + " PRIMARY KEY," +
@@ -46,6 +43,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_IDENTITY + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_DEVICE + TEXT_TYPE + COMMA_SEP +
                     DataBaseSchema.DeviceEntry.COLUMN_NAME_CERTIFICATE + TEXT_TYPE + ")";
+
+    private static final String SQL_DELETE_IDENTITIES =
+            "DROP TABLE IF EXISTS " + DataBaseSchema.IdentityEntry.TABLE_NAME;
 
     private static final String SQL_DELETE_DEVICES =
             "DROP TABLE IF EXISTS " + DataBaseSchema.DeviceEntry.TABLE_NAME;

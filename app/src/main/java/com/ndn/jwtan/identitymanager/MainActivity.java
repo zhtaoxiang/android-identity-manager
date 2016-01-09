@@ -1,5 +1,6 @@
 package com.ndn.jwtan.identitymanager;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,16 +20,28 @@ public class MainActivity extends AppCompatActivity {
     // TODO: Stuck at submit email address without timeout if HOST misconfigured.
     // On memoria, my ICN chat cert runs on 5000, while the openmhealth cert runs on 5001
     protected static final String HOST = "http://memoria.ndn.ucla.edu:5001";
-    protected static final String FLAG = "mobileApp";
-    public static String PACKAGE_NAME;
-
     private static final String slotTaken = "used";
+
+    private String usage = "main";
+    private String mAppCategory = "";
+    private String mAppCertName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+
+        String appCategory = intent.getStringExtra("app_category");
+        String appCertName = intent.getStringExtra("cert_name");
+        if (appCategory != null && appCertName != null) {
+            usage = "authorize";
+            mAppCategory = appCategory;
+            mAppCertName = appCertName;
+        }
+
+        Log.e("zhehao", usage);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         getIdentities();
     }
@@ -55,12 +68,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void authorizeApp(String idName) {
+        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DataBaseSchema.AppEntry.COLUMN_NAME_APP, mAppCategory);
+        values.put(DataBaseSchema.AppEntry.COLUMN_NAME_IDENTITY, idName);
+
+        db.insert(
+                DataBaseSchema.AppEntry.TABLE_NAME,
+                null,
+                values);
+    }
+
     /** Called when the user clicks the generate a new identity button */
     public void generateOrViewIdentity(View view) {
         FloatingActionButton fab = (FloatingActionButton) view;
-        Log.e("zhehao", (String)fab.getTag());
-        if ((String)fab.getTag() == slotTaken) {
-            traceIdentities(fab);
+        if (fab.getTag(R.string.tags_if_taken) == slotTaken) {
+            if (usage == "authorize") {
+                authorizeApp((String)fab.getTag(R.string.tags_id_name));
+                Intent resultIntent = new Intent();
+                String identity = "debug";
+                resultIntent.putExtra("signer_id", identity);
+                setResult(0, resultIntent);
+                finish();
+            } else {
+                traceApplications((String)fab.getTag(R.string.tags_id_name));
+            }
         } else {
             Intent intent = new Intent(this, GenerateToken.class);
             startActivity(intent);
@@ -79,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
         String[] projection = {
                 DataBaseSchema.IdentityEntry._ID,
                 DataBaseSchema.IdentityEntry.COLUMN_NAME_CAPTION,
-                DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_PICTURE,
+                DataBaseSchema.IdentityEntry.COLUMN_NAME_IDENTITY
         };
 
         String[] whereClause = {
@@ -108,12 +144,19 @@ public class MainActivity extends AppCompatActivity {
             if (c.getString(2) != "") {
                 fab.setImageResource(getResources().getIdentifier(c.getString(2), "drawable", getPackageName()));
             }
-            fab.setTag(slotTaken);
+            fab.setTag(R.string.tags_if_taken, slotTaken);
+            fab.setTag(R.string.tags_id_name, c.getString(3));
             idx += 1;
         }
 
         c.close();
         db.close();
+    }
+
+    public void traceApplications(String idName) {
+        Intent intent = new Intent(this, DisplayApps.class);
+        intent.putExtra(DisplayApps.EXTRA_MESSAGE_IDENTITY, idName);
+        startActivity(intent);
     }
 
     /** Called when the user clicks the trace all identities button */

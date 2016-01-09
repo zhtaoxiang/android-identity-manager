@@ -25,14 +25,22 @@
             android:text="@string/token_success"
             android:layout_gravity="center"
             android:id="@+id/step4Hint" />
-<!--
-        <TextView
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/email_confirmation_hint"
-            android:layout_gravity="center" />
--->
+            android:text="Return"
+            android:id="@+id/returnBtn"
+            android:layout_gravity="center_horizontal"
+            android:onClick="returnClick" />
+        <!--
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/email_confirmation_hint"
+                    android:layout_gravity="center" />
+        -->
     </LinearLayout>
 
 </FrameLayout>

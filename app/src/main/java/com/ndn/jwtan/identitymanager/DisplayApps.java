@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public class DisplayApps extends ListActivity {
+    public final static String EXTRA_MESSAGE_IDENTITY = "com.ndn.jwtan.identitymanager.MESSAGE_IDENTITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +23,12 @@ public class DisplayApps extends ListActivity {
 
         // Get the message from the intent
         Intent intent = getIntent();
-        String identity = intent.getStringExtra(DisplayIdentities.EXTRA_MESSAGE_IDENTITY);
+        String identity = intent.getStringExtra(DisplayApps.EXTRA_MESSAGE_IDENTITY);
 
         // Establish Database connection
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 DataBaseSchema.AppEntry.COLUMN_NAME_APP + " DESC";
 
