@@ -3,15 +3,25 @@ package com.ndn.jwtan.identitymanager;
 import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,7 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 
 public class GenerateIdentity extends AppCompatActivity {
 
@@ -36,6 +45,11 @@ public class GenerateIdentity extends AppCompatActivity {
     private String picture = "";
 
     private UICustomViewPager viewPager;
+    private int selectedImageViewId = -1;
+    /*
+    private static int RESULT_LOAD_IMAGE = 1;
+    public static final int KITKAT_VALUE = 1002;
+    */
 
     ////////////////////////////////////////////////////////////
     @Override
@@ -52,7 +66,7 @@ public class GenerateIdentity extends AppCompatActivity {
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);
         final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.token_success));
 
         // Disabling clicking on tabs to switch
         LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
@@ -85,7 +99,43 @@ public class GenerateIdentity extends AppCompatActivity {
             }
         });
         */
+
+        // Disabled picking from gallery for now
+        /*
+        Intent intent;
+
+        if (Build.VERSION.SDK_INT < 19){
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, KITKAT_VALUE);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, KITKAT_VALUE);
+        }
+        */
+
     }
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+    }
+    */
 
     public void submitEmail(View view) {
         Button button = (Button) findViewById(R.id.submitEmail);
@@ -95,10 +145,29 @@ public class GenerateIdentity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.emailText);
         String email = editText.getText().toString();
 
-        this.caption = "caption";
-        this.picture = "picture";
-
         sendHttpRequest(email);
+    }
+
+    public void imageViewClick(View view) {
+        CustomImageViewer v = (CustomImageViewer) view;
+        // test: getDrawable() gives null with "background" instead of "src"
+        //overlay is black with transparency of 0x77 (119)
+        if (!v.selected) {
+            v.getDrawable().setColorFilter(0x33000000, PorterDuff.Mode.MULTIPLY);
+            v.selected = true;
+            this.picture = (String)v.getTag();
+            if (this.selectedImageViewId != -1) {
+                CustomImageViewer oriV = (CustomImageViewer) findViewById(this.selectedImageViewId);
+                imageViewClick(oriV);
+            }
+            this.selectedImageViewId = v.getId();
+        } else {
+            v.getDrawable().setColorFilter(0xFF000000, PorterDuff.Mode.MULTIPLY);
+            v.selected = false;
+            this.picture = "";
+            this.selectedImageViewId = -1;
+        }
+        v.invalidate();
     }
 
     public void tab1Click(View view) {
@@ -122,10 +191,11 @@ public class GenerateIdentity extends AppCompatActivity {
         String email = editText.getText().toString();
 
         EditText editID = (EditText) findViewById(R.id.idNameText);
-        String idName = editText.getText().toString();
+        String idName = editID.getText().toString();
 
         if (isValidEmailAddress(email)) {
             if (idName != "") {
+                this.caption = idName;
                 viewPager.setCurrentItem(2);
             } else {
                 String toastString = "Please give an identity name";

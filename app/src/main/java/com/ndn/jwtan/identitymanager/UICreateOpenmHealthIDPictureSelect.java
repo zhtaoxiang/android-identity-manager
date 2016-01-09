@@ -1,10 +1,13 @@
 package com.ndn.jwtan.identitymanager;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 public class UICreateOpenmHealthIDPictureSelect extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +34,7 @@ public class UICreateOpenmHealthIDPictureSelect extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -51,6 +55,45 @@ public class UICreateOpenmHealthIDPictureSelect extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_uicreate_openm_health_idpicture_select, container, false);
+        View fragView = inflater.inflate(R.layout.fragment_uicreate_openm_health_idpicture_select, container, false);
+
+        return fragView;
     }
+
+    /*
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        String ivId = "imageView";
+        for (Integer idx = 1; idx < 10; idx ++) {
+            ImageView iv = (ImageView) view.findViewById(getResources().getIdentifier(ivId + idx.toString(), "id", MainActivity.PACKAGE_NAME));
+            iv.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            ImageView view = (ImageView) v;
+                            //overlay is black with transparency of 0x77 (119)
+                            view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                            view.invalidate();
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            ImageView view = (ImageView) v;
+                            //clear the overlay
+                            view.getDrawable().clearColorFilter();
+                            view.invalidate();
+                            break;
+                        }
+                    }
+
+                    return true;
+                }
+            });
+
+        }
+        super.onViewCreated(view, savedInstanceState);
+    }
+    */
 }

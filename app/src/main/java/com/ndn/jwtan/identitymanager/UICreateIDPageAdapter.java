@@ -7,10 +7,12 @@ import android.view.MotionEvent;
 
 public class UICreateIDPageAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
+    String hintText;
 
-    public UICreateIDPageAdapter(FragmentManager fm, int NumOfTabs) {
+    public UICreateIDPageAdapter(FragmentManager fm, int NumOfTabs, String hint) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
+        this.hintText = hint;
     }
 
     @Override
@@ -18,17 +20,17 @@ public class UICreateIDPageAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                UICreateOpenmHealthIDInfo tab1 = new UICreateOpenmHealthIDInfo();
-                return tab1;
+                UICreateOpenmHealthIDInfo tab0 = new UICreateOpenmHealthIDInfo();
+                return tab0;
             case 1:
-                UICreateOpenmHealthIDInputDialog tab2 = new UICreateOpenmHealthIDInputDialog();
-                return tab2;
+                UICreateOpenmHealthIDInputDialog tab1 = new UICreateOpenmHealthIDInputDialog();
+                return tab1;
             case 2:
-                UICreateOpenmHealthIDPictureSelect tab3 = new UICreateOpenmHealthIDPictureSelect();
-                return tab3;
+                UICreateOpenmHealthIDPictureSelect tab2 = new UICreateOpenmHealthIDPictureSelect();
+                return tab2;
             case 3:
-                UICreateOpenmHealthIDRequestSent tab4 = new UICreateOpenmHealthIDRequestSent();
-                return tab4;
+                UICreateOpenmHealthIDRequestSent tab3 = UICreateOpenmHealthIDRequestSent.newInstance(hintText, "test");
+                return tab3;
             default:
                 return null;
         }

@@ -33,6 +33,7 @@
     <string name="certificate_fail">Incorrectly generated NDN certificate request, please try again</string>
     <string name="submit_success">Your request for NDN certificate has been received. Your request will be processed and you should receive an email when your certificate is generated.</string>
     <string name="submit_fail">Incorrectly generated NDN certificate request, please try again.</string>
+    <string name="please_wait">Please wait...</string>
 
     <string name="title_activity_uri_handler">Identity Manager</string>
 

@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- For getting device IMEI if needed -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Read from gallery -->
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
 
     <application
         android:allowBackup="true"
@@ -29,7 +31,7 @@
         <activity
             android:name=".SubmitIdentityRequest"
             android:label="@string/title_activity_submit_identity_request"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".UriHandler"

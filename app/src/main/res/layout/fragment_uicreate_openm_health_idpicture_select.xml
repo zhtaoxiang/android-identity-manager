@@ -34,71 +34,90 @@
 
     <FrameLayout
         android:layout_width="302dp"
-        android:layout_height="328dp"
+        android:layout_height="302dp"
         android:layout_gravity="center">
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
-            android:id="@+id/imageView"
+            android:layout_height="83dp"
+            android:id="@+id/imageView1"
             android:layout_gravity="left|top"
-            android:background="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_people_outline_black_24dp"
+            android:tag="ic_people_outline_black_24dp"
+            android:onClick="imageViewClick"
+            android:nestedScrollingEnabled="false" />
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView2"
             android:layout_gravity="center_horizontal|top"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_mood_bad_black_24dp"
+            android:tag="ic_mood_bad_black_24dp" />
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView3"
             android:layout_gravity="right|top"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_cake_black_24dp"
+            android:tag="ic_cake_black_24dp" />
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView4"
             android:layout_gravity="left|center_vertical"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_party_mode_black_24dp"
+            android:tag="ic_party_mode_black_24dp" />
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView5"
             android:layout_gravity="center"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_school_black_24dp"
+            android:tag="ic_school_black_24dp"/>
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView6"
+            android:onClick="imageViewClick"
             android:layout_gravity="right|center_vertical"
-            android:background="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_mood_black_24dp"
+            android:tag="ic_mood_black_24dp"/>
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView7"
             android:layout_gravity="left|bottom"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_person_add_black_24dp"
+            android:tag="ic_person_add_black_24dp" />
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView8"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_share_black_24dp"
+            android:tag="ic_share_black_24dp"/>
 
-        <ImageView
+        <com.ndn.jwtan.identitymanager.CustomImageViewer
             android:layout_width="83dp"
-            android:layout_height="102dp"
+            android:layout_height="83dp"
             android:id="@+id/imageView9"
             android:layout_gravity="right|bottom"
-            android:background="@mipmap/ic_launcher" />
+            android:onClick="imageViewClick"
+            android:src="@drawable/ic_whatshot_black_24dp"
+            android:tag="ic_whatshot_black_24dp"/>
 
     </FrameLayout>
 

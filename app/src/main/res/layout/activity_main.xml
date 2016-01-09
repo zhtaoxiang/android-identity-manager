@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-
+                    android:tag="empty"
                     android:onClick="generateOrViewIdentity" />
             </RelativeLayout>
             <RelativeLayout
@@ -42,7 +42,7 @@
                     android:id="@+id/tv0"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>
@@ -63,7 +63,9 @@
                     android:src="@drawable/ic_add_white_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:tag="empty"
+                    android:layout_centerInParent="true"
+                    android:onClick="generateOrViewIdentity"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -73,7 +75,7 @@
                     android:id="@+id/tv1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>
@@ -104,7 +106,9 @@
                     android:src="@drawable/ic_add_white_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:tag="empty"
+                    android:layout_centerInParent="true"
+                    android:onClick="generateOrViewIdentity"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -114,7 +118,7 @@
                     android:id="@+id/tv2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>
@@ -135,7 +139,9 @@
                     android:src="@drawable/ic_add_white_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:tag="empty"
+                    android:layout_centerInParent="true"
+                    android:onClick="generateOrViewIdentity"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -145,7 +151,7 @@
                     android:id="@+id/tv3"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>
@@ -176,7 +182,9 @@
                     android:src="@drawable/ic_add_white_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:tag="empty"
+                    android:layout_centerInParent="true"
+                    android:onClick="generateOrViewIdentity"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -186,7 +194,7 @@
                     android:id="@+id/tv4"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>
@@ -207,7 +215,9 @@
                     android:src="@drawable/ic_add_white_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:tag="empty"
+                    android:layout_centerInParent="true"
+                    android:onClick="generateOrViewIdentity"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -217,7 +227,7 @@
                     android:id="@+id/tv5"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="some text"
+                    android:text="Create new ID"
                     android:layout_centerInParent="true"
                     android:gravity="center_horizontal"/>
             </RelativeLayout>

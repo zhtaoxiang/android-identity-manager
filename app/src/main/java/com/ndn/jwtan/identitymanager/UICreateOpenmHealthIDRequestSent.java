@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class UICreateOpenmHealthIDRequestSent extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -51,6 +52,16 @@ public class UICreateOpenmHealthIDRequestSent extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_uicreate_openm_health_idrequest_sent, container, false);
+        View view = inflater.inflate(R.layout.fragment_uicreate_openm_health_idrequest_sent, container, false);
+        TextView tv = (TextView) view.findViewById(R.id.step4Hint);
+        tv.setText(mParam1);
+        return view;
     }
+
+    /*
+    public void updateHintText(String hintText) {
+        TextView hintView = (TextView) getView().findViewById(R.id.step4Hint);
+        hintView.setText(hintText);
+    }
+    */
 }

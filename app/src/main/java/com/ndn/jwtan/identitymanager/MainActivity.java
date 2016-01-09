@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,11 +23,15 @@ public class MainActivity extends AppCompatActivity {
     // On memoria, my ICN chat cert runs on 5000, while the openmhealth cert runs on 5001
     protected static final String HOST = "http://memoria.ndn.ucla.edu:5001";
     protected static final String FLAG = "mobileApp";
+    public static String PACKAGE_NAME;
+
+    private static final String slotTaken = "used";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         getIdentities();
     }
@@ -55,13 +60,17 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user clicks the generate a new identity button */
     public void generateOrViewIdentity(View view) {
-        Intent intent = new Intent(this, GenerateIdentity.class);
-        startActivity(intent);
+        FloatingActionButton fab = (FloatingActionButton) view;
+        Log.e("zhehao", (String)fab.getTag());
+        if ((String)fab.getTag() == slotTaken) {
+            traceIdentities(fab);
+        } else {
+            Intent intent = new Intent(this, GenerateIdentity.class);
+            startActivity(intent);
+        }
     }
 
     public void getIdentities() {
-        String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
-
         // Establish Database connection
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -91,12 +100,18 @@ public class MainActivity extends AppCompatActivity {
         );
 
         Integer idx = 0;
-        while (c.moveToNext()) {
-            Log.d("zhehao", c.getString(1));
-            Log.d("zhehao", c.getString(2));
+        // temporary maxIdx for static layout
+        int maxIdx = 6;
+        while (c.moveToNext() && idx < maxIdx) {
             String tvId = "tv" + idx.toString();
-            TextView tv = (TextView)this.findViewById(getResources().getIdentifier(tvId, "id", getPackageName()));
+            TextView tv = (TextView) this.findViewById(getResources().getIdentifier(tvId, "id", getPackageName()));
             tv.setText(c.getString(1));
+            String fabId = "fab" + idx.toString();
+            FloatingActionButton fab = (FloatingActionButton) this.findViewById(getResources().getIdentifier(fabId, "id", getPackageName()));
+            if (c.getString(2) != "") {
+                fab.setImageResource(getResources().getIdentifier(c.getString(2), "drawable", getPackageName()));
+            }
+            fab.setTag(slotTaken);
             idx += 1;
         }
 
