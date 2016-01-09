@@ -47,10 +47,10 @@ public class GenerateIdentity extends AppCompatActivity {
         setContentView(R.layout.activity_generate_token_and_identity);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Step 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 4"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.icon_filled));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.icon_filled));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.icon_filled));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.icon_filled));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);

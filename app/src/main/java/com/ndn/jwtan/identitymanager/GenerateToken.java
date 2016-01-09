@@ -41,6 +41,10 @@ public class GenerateToken extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     public static final int KITKAT_VALUE = 1002;
     */
+    private TabLayout.Tab tab0;
+    private TabLayout.Tab tab1;
+    private TabLayout.Tab tab2;
+    private TabLayout.Tab tab3;
 
     ////////////////////////////////////////////////////////////
     @Override
@@ -49,10 +53,14 @@ public class GenerateToken extends AppCompatActivity {
         setContentView(R.layout.activity_generate_token_and_identity);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Step 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Step 4"));
+        tab0 = tabLayout.newTab().setIcon(R.drawable.icon_filled);
+        tab1 = tabLayout.newTab().setIcon(R.drawable.icon_empty);
+        tab2 = tabLayout.newTab().setIcon(R.drawable.icon_empty);
+        tab3 = tabLayout.newTab().setIcon(R.drawable.icon_empty);
+        tabLayout.addTab(tab0);
+        tabLayout.addTab(tab1);
+        tabLayout.addTab(tab2);
+        tabLayout.addTab(tab3);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);
@@ -169,6 +177,7 @@ public class GenerateToken extends AppCompatActivity {
 
     public void tab1Click(View view) {
         viewPager.setCurrentItem(1);
+        tab1.setIcon(R.drawable.icon_filled);
     }
 
     public void declineClick(View view) {
@@ -194,6 +203,7 @@ public class GenerateToken extends AppCompatActivity {
             if (idName != "") {
                 this.caption = idName;
                 viewPager.setCurrentItem(2);
+                tab2.setIcon(R.drawable.icon_filled);
             } else {
                 String toastString = "Please give an identity name";
                 Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
@@ -215,6 +225,14 @@ public class GenerateToken extends AppCompatActivity {
         // for passing into the new Response.Listener
         final String caption = this.caption;
         final String picture = this.picture;
+
+        final CustomImageViewer oriV;
+        // resets the selected image
+        if (this.selectedImageViewId != -1) {
+            oriV = (CustomImageViewer) findViewById(this.selectedImageViewId);
+        } else {
+            oriV = null;
+        }
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, mURL,
@@ -244,6 +262,10 @@ public class GenerateToken extends AppCompatActivity {
                                 newFragment.show(getFragmentManager(), "message");
                             }
                             viewPager.setCurrentItem(3);
+                            tab3.setIcon(R.drawable.icon_filled);
+                            if (oriV != null) {
+                                imageViewClick(oriV);
+                            }
                         }
                         catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());
