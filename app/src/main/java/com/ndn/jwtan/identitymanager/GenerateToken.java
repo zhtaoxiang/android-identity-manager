@@ -156,11 +156,11 @@ public class GenerateToken extends AppCompatActivity {
         if (!v.selected) {
             v.getDrawable().setColorFilter(0x33000000, PorterDuff.Mode.MULTIPLY);
             v.selected = true;
-            this.picture = (String)v.getTag();
             if (this.selectedImageViewId != -1) {
                 CustomImageViewer oriV = (CustomImageViewer) findViewById(this.selectedImageViewId);
                 imageViewClick(oriV);
             }
+            this.picture = (String)v.getTag();
             this.selectedImageViewId = v.getId();
         } else {
             v.getDrawable().setColorFilter(0xFF000000, PorterDuff.Mode.MULTIPLY);
