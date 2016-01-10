@@ -19,7 +19,7 @@ Screen recording on Android 4.4.4 (Kitkat): https://www.youtube.com/watch?v=uFry
 ### How to use:
 
 * Steps to create an OpenmHealth identity:
-  * Launch application, choose "Create new ID" 
+  * Launch application, tap one of the plus signs above each "Create new ID"
   * Accept the terms of service
   * Put your email address and give the identity a name (this name is kept locally, and has nothing to do with the ID's NDN name), click next
   * Choose a profile picture (optional), click submit
