@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class GenerateIdentity extends AppCompatActivity {
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);
         final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.please_wait));
+                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.please_wait), true);
 
         // Disabling clicking on tabs to switch
         LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
@@ -197,6 +198,9 @@ public class GenerateIdentity extends AppCompatActivity {
                             else {
 
                             }
+
+                            Button returnBtn = (Button) findViewById(R.id.returnBtn);
+                            returnBtn.setEnabled(true);
                         }
                         catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());

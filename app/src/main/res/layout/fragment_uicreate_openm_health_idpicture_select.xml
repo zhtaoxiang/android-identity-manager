@@ -123,9 +123,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:text="@string/profile_picture_hint"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal|top" />
+        android:id="@+id/selectPictureHint"
+        android:layout_gravity="center|top"
+        android:textIsSelectable="false"
+        android:textSize="24sp" />
 
 </FrameLayout>

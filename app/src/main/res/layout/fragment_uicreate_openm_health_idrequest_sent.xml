@@ -8,31 +8,43 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="146dp"
+        android:layout_height="276dp"
         android:layout_gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView10"
-            android:background="@mipmap/ic_launcher"
+            android:id="@+id/step4ImageView"
             android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/step4IdName"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:text="id name"
+            android:textColor="#444444" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/step4Email"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:text="email"
+            android:textColor="#444444" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/token_success"
-            android:layout_gravity="center"
-            android:id="@+id/step4Hint" />
+            android:id="@+id/step4Hint"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Return"
-            android:id="@+id/returnBtn"
-            android:layout_gravity="center_horizontal"
-            android:onClick="returnClick" />
         <!--
                 <TextView
                     android:layout_width="wrap_content"
@@ -42,5 +54,13 @@
                     android:layout_gravity="center" />
         -->
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        android:id="@+id/returnBtn"
+        android:layout_gravity="center_horizontal|bottom"
+        android:onClick="returnClick" />
 
 </FrameLayout>

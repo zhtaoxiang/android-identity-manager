@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UICreateOpenmHealthIDRequestSent extends Fragment {
@@ -14,8 +16,8 @@ public class UICreateOpenmHealthIDRequestSent extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mHintText;
+    private boolean mDisableExtra;
 
     /**
      * Use this factory method to create a new instance of
@@ -26,11 +28,11 @@ public class UICreateOpenmHealthIDRequestSent extends Fragment {
      * @return A new instance of fragment UICreateOpenmHealthIDRequestSent.
      */
     // TODO: Rename and change types and number of parameters
-    public static UICreateOpenmHealthIDRequestSent newInstance(String param1, String param2) {
+    public static UICreateOpenmHealthIDRequestSent newInstance(String param1, boolean param2) {
         UICreateOpenmHealthIDRequestSent fragment = new UICreateOpenmHealthIDRequestSent();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,8 +45,8 @@ public class UICreateOpenmHealthIDRequestSent extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mHintText = getArguments().getString(ARG_PARAM1);
+            mDisableExtra = getArguments().getBoolean(ARG_PARAM2);
         }
     }
 
@@ -54,14 +56,17 @@ public class UICreateOpenmHealthIDRequestSent extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_uicreate_openm_health_idrequest_sent, container, false);
         TextView tv = (TextView) view.findViewById(R.id.step4Hint);
-        tv.setText(mParam1);
+        tv.setText(mHintText);
+        if (mDisableExtra) {
+            TextView emailTv = (TextView) view.findViewById(R.id.step4Email);
+            TextView idNameTv = (TextView) view.findViewById(R.id.step4IdName);
+            ImageView imageView = (ImageView) view.findViewById(R.id.step4ImageView);
+            Button returnBtn = (Button) view.findViewById(R.id.returnBtn);
+            emailTv.setVisibility(View.GONE);
+            idNameTv.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
+            returnBtn.setEnabled(false);
+        }
         return view;
     }
-
-    /*
-    public void updateHintText(String hintText) {
-        TextView hintView = (TextView) getView().findViewById(R.id.step4Hint);
-        hintView.setText(hintText);
-    }
-    */
 }

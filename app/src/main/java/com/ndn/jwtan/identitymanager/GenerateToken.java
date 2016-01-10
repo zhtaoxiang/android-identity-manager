@@ -12,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -65,7 +67,7 @@ public class GenerateToken extends AppCompatActivity {
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);
         final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.token_success));
+                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.token_success), false);
 
         // Disabling clicking on tabs to switch
         LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
@@ -261,6 +263,24 @@ public class GenerateToken extends AppCompatActivity {
                                 DialogFragment newFragment = new MessageDialogFragment(R.string.token_fail);
                                 newFragment.show(getFragmentManager(), "message");
                             }
+
+                            TextView emailView = (TextView) findViewById(R.id.step4Email);
+                            emailView.setText(email);
+                            emailView.setVisibility(View.VISIBLE);
+
+                            TextView idNameView = (TextView) findViewById(R.id.step4IdName);
+                            idNameView.setText(caption);
+                            idNameView.setVisibility(View.VISIBLE);
+
+                            ImageView profileImageView = (ImageView) findViewById(R.id.step4ImageView);
+                            // Could need a better approach to clear
+                            profileImageView.setImageResource(0);
+                            profileImageView.setImageResource(getResources().getIdentifier(picture, "drawable", getPackageName()));
+                            profileImageView.setVisibility(View.VISIBLE);
+
+                            Button returnBtn = (Button) findViewById(R.id.returnBtn);
+                            returnBtn.setEnabled(true);
+
                             viewPager.setCurrentItem(3);
                             tab3.setIcon(R.drawable.icon_filled);
                             if (oriV != null) {

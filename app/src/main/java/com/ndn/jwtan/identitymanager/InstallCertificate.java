@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +68,7 @@ public class InstallCertificate extends AppCompatActivity {
 
         viewPager = (UICustomViewPager) findViewById(R.id.pager);
         final UICreateIDPageAdapter adapter = new UICreateIDPageAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.please_wait));
+                (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.please_wait), true);
 
         // Disabling clicking on tabs to switch
         LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
@@ -164,6 +165,9 @@ public class InstallCertificate extends AppCompatActivity {
                             String hint = "Certificate installed: " + certificate.getName().toUri();
                             TextView hintText = (TextView) findViewById(R.id.step4Hint);
                             hintText.setText(hint);
+
+                            Button returnBtn = (Button) findViewById(R.id.returnBtn);
+                            returnBtn.setEnabled(true);
                         } catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());
                         }
