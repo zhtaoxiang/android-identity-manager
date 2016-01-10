@@ -8,7 +8,7 @@ Screen recording on Android 4.4.4 (Kitkat): https://www.youtube.com/watch?v=uFry
 
 ### What it does:
 
-* Request an Open mHealth id
+* Request an Open mHealth id (similar with NDN cert)
   * Generate user and device identity
   * Request a user identity to be signed by Open mHealth root
   * Sign a device identity with user identity
@@ -56,6 +56,7 @@ Screen recording on Android 4.4.4 (Kitkat): https://www.youtube.com/watch?v=uFry
 * The app uses a default certificate issueing website at: http://memoria.ndn.ucla.edu:5001, whose interface's documented at: https://github.com/zhehaowang/openmhealth-cert#webmobile-app-interface. The site's based on https://github.com/named-data/ndncert
 * To see the list of issued identities, go to http://memoria.ndn.ucla.edu:5001/cert/list/html
 * The NDNFit capture application will be released soon; 
+* The two interactions with email application: first one gets the assigned namespace, and verifies that the user owns the email address; second one gets the signed certificate, if it's approved. (Currently split in two, could merge into one?)
 
 ### Development:
 
