@@ -92,8 +92,6 @@ public class GenerateIdentity extends AppCompatActivity {
     }
 
     public String getIdentityName(String assignedNamespace) {
-        String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
-
         // Establish Database connection
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();

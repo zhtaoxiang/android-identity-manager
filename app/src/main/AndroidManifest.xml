@@ -69,15 +69,12 @@
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         </activity>
         <activity
-            android:name=".SignCertificate"
+            android:name=".SignAppCertificate"
             android:label="@string/title_activity_sign_certificate"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
             <intent-filter>
-                <action android:name="com.ndn.jwtan.identitymanager.SIGN" />
-
+                <action android:name="com.ndn.jwtan.identitymanager.SIGN_CERTIFICATE" />
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
     </application>

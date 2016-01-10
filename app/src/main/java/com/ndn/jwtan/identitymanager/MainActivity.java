@@ -1,5 +1,6 @@
 package com.ndn.jwtan.identitymanager;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,19 +24,17 @@ public class MainActivity extends AppCompatActivity {
     private static final String slotTaken = "used";
 
     private String usage = "main";
-    private String mAppCategory = "";
-    private String mAppCertName = "";
+    private String mAppID = "";
+    private String mAppCert = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
 
-        String appCategory = intent.getStringExtra("app_category");
-        String appCertName = intent.getStringExtra("cert_name");
-        if (appCategory != null && appCertName != null) {
+        String appID = intent.getStringExtra("app_id");
+        if (appID != null) {
             usage = "authorize";
-            mAppCategory = appCategory;
-            mAppCertName = appCertName;
+            mAppID = appID;
         }
 
         Log.e("zhehao", usage);
@@ -68,30 +67,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void authorizeApp(String idName) {
-        DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(DataBaseSchema.AppEntry.COLUMN_NAME_APP, mAppCategory);
-        values.put(DataBaseSchema.AppEntry.COLUMN_NAME_IDENTITY, idName);
-
-        db.insert(
-                DataBaseSchema.AppEntry.TABLE_NAME,
-                null,
-                values);
-    }
-
     /** Called when the user clicks the generate a new identity button */
     public void generateOrViewIdentity(View view) {
         FloatingActionButton fab = (FloatingActionButton) view;
         if (fab.getTag(R.string.tags_if_taken) == slotTaken) {
             if (usage == "authorize") {
-                authorizeApp((String)fab.getTag(R.string.tags_id_name));
+                //authorizeApp((String) fab.getTag(R.string.tags_id_name));
                 Intent resultIntent = new Intent();
-                String identity = "debug";
-                resultIntent.putExtra("signer_id", identity);
-                setResult(0, resultIntent);
+                // Although we have a device ID, the user ID is used to sign app ID
+                resultIntent.putExtra("prefix", (String) fab.getTag(R.string.tags_id_name));
+                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             } else {
                 traceApplications((String)fab.getTag(R.string.tags_id_name));
@@ -102,6 +87,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Always exit the application when back is pressed for Main activity,
+    // instead of potentially returning to "action finished", or "create identity"
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    // Although we have a device ID, the user ID is used to sign app ID
     public void getIdentities() {
         // Establish Database connection
         DataBaseHelper dbHelper = new DataBaseHelper(this);
