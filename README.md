@@ -4,7 +4,7 @@ Zhehao <zhehao@cs.ucla.edu> (Original work by Jiewen Tan, https://github.com/ala
 
 Jan 9, 2015 - v0.2
 
-Screen recording on Android 4.4.4 (Kitkat): https://www.youtube.com/watch?v=uFrymOzjJt8
+Screen recording on Android 4.4.4 (Kitkat): https://vimeo.com/151273751
 
 ### What it does:
 
