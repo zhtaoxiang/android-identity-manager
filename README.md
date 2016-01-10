@@ -6,6 +6,16 @@ Jan 9, 2015 - v0.2
 
 Screen recording on Android 4.4.4 (Kitkat): https://www.youtube.com/watch?v=uFrymOzjJt8
 
+### What it does:
+
+* Request an Open mHealth id
+  * Generate user and device identity
+  * Request a user identity to be signed by Open mHealth root
+  * Sign a device identity with user identity
+* Authorize NDNFit application
+  * Sign an application identity with user identity
+  * Display authorized applications
+
 ### How to use:
 
 * Steps to create an OpenmHealth identity:
