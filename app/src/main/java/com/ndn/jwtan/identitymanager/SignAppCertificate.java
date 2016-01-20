@@ -70,12 +70,12 @@ public class SignAppCertificate extends Activity {
         IdentityManager identityManager = new IdentityManager(identityStorage, privateKeyStorage);
 
         try {
-            Name idName = new Name(signerID);
+            Name signerName = new Name(signerID);
             double notBefore = System.currentTimeMillis();
             double notAfter = notBefore + 31556952000.0;
             IdentityCertificate newCertificate = identityManager.prepareUnsignedIdentityCertificate(
-                    idCert.getPublicKeyName(), idCert.getPublicKeyInfo(), idName, notBefore, notAfter, (List) null);
-            identityManager.signByCertificate(newCertificate, identityManager.getDefaultCertificateNameForIdentity(idName));
+                    idCert.getPublicKeyName(), idCert.getPublicKeyInfo(), signerName, notBefore, notAfter, null);
+            identityManager.signByCertificate(newCertificate, identityManager.getDefaultCertificateNameForIdentity(signerName));
 
             // Gets the data repository in write mode
             DataBaseHelper dbHelper = new DataBaseHelper(getApplicationContext());
