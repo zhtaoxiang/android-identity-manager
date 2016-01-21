@@ -115,6 +115,9 @@ function getCatalogs(userPrefix) {
 
   console.log("Express name " + name.toUri());
   face.expressInterest(interest, onCatalogData, onCatalogTimeout);
+
+  document.getElementById("content").innerHTML += "Fetching fitness data under prefix: " + userPrefix + "<br>";
+;
 };
 
 function getData(catalogs) {
@@ -133,9 +136,26 @@ function getData(catalogs) {
   }
 }
 
+function formatTime(unixTimestamp) {
+  var a = new Date(unixTimestamp);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
 var onAppData = function (interest, data) {
   console.log("Got fitness data: " + data.getName().toUri());
-  console.log("Fitness payload: " + data.getContent().buf().toString('binary'));
+  var content = JSON.parse(data.getContent().buf().toString('binary'));
+  console.log("Fitness payload: " + JSON.stringify(content));
+  for (var i = 0; i < content.length; i++) {
+    document.getElementById("content").innerHTML += formatTime(content[i].timeStamp) + "  " + JSON.stringify(content[i]) + "<br>";
+  }
 }
 
 var onAppDataTimeout = function (interest) {
