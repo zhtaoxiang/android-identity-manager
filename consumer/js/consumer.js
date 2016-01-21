@@ -153,6 +153,7 @@ var onAppData = function (interest, data) {
   console.log("Got fitness data: " + data.getName().toUri());
   var content = JSON.parse(data.getContent().buf().toString('binary'));
   console.log("Fitness payload: " + JSON.stringify(content));
+  console.log("Data keyLocator keyName: " + data.getSignature().getKeyLocator().getKeyName().toUri());
   for (var i = 0; i < content.length; i++) {
     document.getElementById("content").innerHTML += formatTime(content[i].timeStamp) + "  " + JSON.stringify(content[i]) + "<br>";
   }
