@@ -10,10 +10,12 @@ var Name = require('ndn-js').Name;
 var UnixTransport = require('ndn-js').UnixTransport;
 var Exclude = require('ndn-js').Exclude;
 
+// Data recorded this morning: z8miG6uIvHZBqdXyExbd0BIyB1CGRzQQ81T6b2xHuc8qTKnopYFri3WEzeUt
+
 var Config = {
 	hostName: "memoria.ndn.ucla.edu",
   wsPort: 9696,
-  defaultUsername: "BwInbugZnm7dS0zjZKa3Q0PlFooURUv8A6MOnOMz4wyXqTxiIrYNn7BWjAeF",
+  defaultUsername: "z8miG6uIvHZBqdXyExbd0BIyB1CGRzQQ81T6b2xHuc8qTKnopYFri3WEzeUt",
   defaultPrefix: "/org/openmhealth/",
   catalogPrefix: "/data/fitness/physical_activity/time_location/catalog/",
   dataPrefix: "/data/fitness/physical_activity/time_location/",

@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String slotTaken = "used";
 
     private String usage = "main";
-    private String mAppID = "";
-    private String mAppCert = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         String appID = intent.getStringExtra("app_id");
         if (appID != null) {
             usage = "authorize";
-            mAppID = appID;
         }
 
         Log.e("zhehao", usage);
