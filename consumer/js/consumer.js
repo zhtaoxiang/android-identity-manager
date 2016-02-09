@@ -15,7 +15,7 @@ var Exclude = require('ndn-js').Exclude;
 var Config = {
 	hostName: "memoria.ndn.ucla.edu",
   wsPort: 9696,
-  defaultUsername: "z8miG6uIvHZBqdXyExbd0BIyB1CGRzQQ81T6b2xHuc8qTKnopYFri3WEzeUt",
+  defaultUsername: "S9v62lEnQf6PSsdSarGm6ulPEfHSZ12ERBZlGBt6tflHvf4tQR7lsD2wbCzO",
   defaultPrefix: "/org/openmhealth/",
   catalogPrefix: "/data/fitness/physical_activity/time_location/catalog/",
   dataPrefix: "/data/fitness/physical_activity/time_location/",
@@ -149,6 +149,36 @@ function formatTime(unixTimestamp) {
   var sec = a.getSeconds();
   var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
   return time;
+}
+
+// enumerate the current list of users in repo
+function onUserData(interest, data) {
+  console.log("Got user: " + data.getName().get(2).toEscapedString());
+  var newInterest = new Interest(interest);
+  newInterest.getExclude().appendComponent(data.getName().get(2));
+  face.expressInterest(newInterest, onUserData, onUserTimeout);
+  console.log("Express name " + newInterest.getName().toUri());
+}
+
+function onUserTimeout(interest) {
+  console.log("User interest timeout; scan for user finishes");
+}
+
+function getUsers(prefix) {
+  if (prefix == undefined) {
+    prefix = Config.defaultPrefix;
+  }
+  var name = new Name(prefix);
+  var interest = new Interest(name);
+  interest.setInterestLifetimeMilliseconds(Config.defaultInterestLifetime);
+  // start from leftmost child
+  interest.setChildSelector(0);
+  interest.setMustBeFresh(true);
+
+  console.log("Express name " + name.toUri());
+  face.expressInterest(interest, onUserData, onUserTimeout);
+
+  document.getElementById("content").innerHTML += "Fetching users under prefix: " + prefix + "<br>";
 }
 
 var onAppData = function (interest, data) {
