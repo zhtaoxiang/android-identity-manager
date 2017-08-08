@@ -37,20 +37,23 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
-            android:name=".UriHandler"
+            android:name="com.ndn.jwtan.identitymanager.UriHandler"
             android:label="@string/title_activity_uri_handler" >
             <intent-filter>
-                <data
-                    android:host="ndncert.named-data.net"
-                    android:scheme="http" />
-                <data
-                    android:host="memoria.ndn.ucla.edu"
-                    android:scheme="http" />
-
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" android:host="ndncert.named-data.net"/>
+                <data android:scheme="http" android:host="memoria.ndn.ucla.edu"/>
+                <data android:scheme="http" android:host="memoria.ndn.ucla.edu:5001"/>
+
+                <data android:scheme="https" android:host="ndncert.named-data.net"/>
+                <data android:scheme="https" android:host="memoria.ndn.ucla.edu"/>
+                <data android:scheme="https" android:host="memoria.ndn.ucla.edu:5001"/>
+                <data android:host="ndncert.named-data.net"/>
+                <data android:host="memoria.ndn.ucla.edu"/>
+                <data android:host="memoria.ndn.ucla.edu:5001"/>
             </intent-filter>
         </activity>
         <activity
