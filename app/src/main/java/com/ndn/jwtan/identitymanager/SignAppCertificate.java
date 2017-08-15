@@ -8,15 +8,26 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
+import net.named_data.jndn.ControlParameters;
+import net.named_data.jndn.ControlResponse;
 import net.named_data.jndn.Data;
+import net.named_data.jndn.Face;
+import net.named_data.jndn.Interest;
 import net.named_data.jndn.Name;
+import net.named_data.jndn.OnData;
+import net.named_data.jndn.OnTimeout;
+import net.named_data.jndn.encoding.EncodingException;
+import net.named_data.jndn.security.KeyChain;
 import net.named_data.jndn.security.certificate.IdentityCertificate;
 import net.named_data.jndn.security.identity.AndroidSqlite3IdentityStorage;
 import net.named_data.jndn.security.identity.FilePrivateKeyStorage;
 import net.named_data.jndn.security.identity.IdentityManager;
 import net.named_data.jndn.security.identity.IdentityStorage;
 import net.named_data.jndn.security.identity.PrivateKeyStorage;
+import net.named_data.jndn.security.policy.SelfVerifyPolicyManager;
 import net.named_data.jndn.util.Blob;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by zhehaowang on 1/9/16.
@@ -58,36 +69,39 @@ public class SignAppCertificate extends Activity {
         }
     }
 
-    private String signAndRecordCertificate(String signerID, IdentityCertificate idCert, String appID) {
+    private String signAndRecordCertificate(final String signerID, IdentityCertificate idCert, String appID) {
         String dbPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.DB_NAME;
         String certDirPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/" + MainActivity.CERT_DIR;
 
         IdentityStorage identityStorage = new AndroidSqlite3IdentityStorage(dbPath);
         PrivateKeyStorage privateKeyStorage = new FilePrivateKeyStorage(certDirPath);
-        IdentityManager identityManager = new IdentityManager(identityStorage, privateKeyStorage);
+        final IdentityManager identityManager = new IdentityManager(identityStorage, privateKeyStorage);
 
-//        final KeyChain keyChain = new KeyChain(identityManager, new SelfVerifyPolicyManager(identityStorage));
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    identityManager.setDefaultIdentity(new Name(signerID));
-//                    Log.d(TAG, "the default certificate is set to be " + keyChain.getDefaultCertificateName().toString());
-//                    final Face face = new Face();
-//                    face.setCommandSigningInfo(keyChain, keyChain.getDefaultCertificateName());
-//                    registerRemotePrefix(signerID, face, keyChain);
-//                    while (true) {
-//                        face.processEvents();
-//                        Thread.sleep(5);
-//                    }
-//
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        ).start();
+        final KeyChain keyChain = new KeyChain(identityManager, new SelfVerifyPolicyManager(identityStorage));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    identityManager.setDefaultIdentity(new Name(signerID));
+                    Log.d(TAG, "the default certificate is set to be " + keyChain.getDefaultCertificateName().toString());
+                    final Face face = new Face();
+                    face.setCommandSigningInfo(keyChain, keyChain.getDefaultCertificateName());
+                    registerRemotePrefix(signerID, face, keyChain);
+                    int counter = 0;
+                    // run it for 10 seconds
+                    while (counter < 2000) {
+                        face.processEvents();
+                        Thread.sleep(5);
+                        counter ++;
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ).start();
 
         try {
             Name signerName = new Name(signerID);
@@ -112,6 +126,7 @@ public class SignAppCertificate extends Activity {
                     DataBaseSchema.AppEntry.TABLE_NAME,
                     null,
                     values);
+            db.close();
             return encoded;
         } catch (Exception e) {
             Log.e(getResources().getString(R.string.app_name), e.getMessage());
@@ -122,40 +137,39 @@ public class SignAppCertificate extends Activity {
     /**
      * register a back prefix at the remote NFD
      */
-//    private static void registerRemotePrefix(String prefix, Face face, KeyChain keyChain) {
-//        Name remotePrefixRegisterPrefix = new Name("/localhop/nfd/rib/register");
-//        ControlParameters params = new ControlParameters();
-//        params.setName(new Name(prefix));
-//        remotePrefixRegisterPrefix.append(params.wireEncode());
-//        Interest remotePrefixRegisterInterest = new Interest(remotePrefixRegisterPrefix);
-//        Log.d("registerRemotePrefix", "try");
-//        try {
-//            keyChain.sign(remotePrefixRegisterInterest, keyChain.getDefaultCertificateName());
-//            face.expressInterest(remotePrefixRegisterInterest, new OnData() {
-//                @Override
-//                public void onData(Interest interest, Data data) {
-//                    System.out.println(data.getContent().toString());
-//                    ControlParametersResponse resp = new ControlResponse();
-//                    try {
-//                        resp.wireDecode(data.getContent());
-//                        if (resp.getStatusCode() == 200) {
-//                            Log.d("registerRemotePrefix", "succeeded");
-//                        } else {
-//                            Log.d("registerRemotePrefix", "failed");
-//                        }
-//                    } catch (EncodingException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }, new OnTimeout() {
-//                @Override
-//                public void onTimeout(Interest interest) {
-//                    System.out.println("Time out for interest " + interest.getName().toUri());
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private static void registerRemotePrefix(String prefix, Face face, KeyChain keyChain) {
+        Name remotePrefixRegisterPrefix = new Name("/localhop/nfd/rib/register");
+        ControlParameters params = new ControlParameters();
+        params.setName(new Name(prefix));
+        remotePrefixRegisterPrefix.append(params.wireEncode());
+        Interest remotePrefixRegisterInterest = new Interest(remotePrefixRegisterPrefix);
+        Log.d("registerRemotePrefix", "try to register " + prefix);
+        try {
+            keyChain.sign(remotePrefixRegisterInterest, keyChain.getDefaultCertificateName());
+            face.expressInterest(remotePrefixRegisterInterest, new OnData() {
+                @Override
+                public void onData(Interest interest, Data data) {
+                    ControlResponse resp = new ControlResponse();
+                    try {
+                        resp.wireDecode(data.getContent());
+                        if (resp.getStatusCode() == 200) {
+                            Log.d("registerRemotePrefix", "succeeded");
+                        } else {
+                            Log.d("registerRemotePrefix", "failed");
+                        }
+                    } catch (EncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new OnTimeout() {
+                @Override
+                public void onTimeout(Interest interest) {
+                    System.out.println("Time out for interest " + interest.getName().toUri());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

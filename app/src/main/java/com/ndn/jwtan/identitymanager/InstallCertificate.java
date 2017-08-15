@@ -1,29 +1,21 @@
 package com.ndn.jwtan.identitymanager;
 
-import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-// For getting IMEI
-import android.telephony.TelephonyManager;
-import java.util.UUID;
-import android.content.Context;
-
-// For getting Android ID: This ID will change upon factory reset, and can be changed in rooted phones
-//import android.provider.Settings.Secure;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,20 +26,24 @@ import com.android.volley.toolbox.Volley;
 
 import net.named_data.jndn.Data;
 import net.named_data.jndn.Name;
-import net.named_data.jndn.security.*;
 import net.named_data.jndn.security.SecurityException;
 import net.named_data.jndn.security.certificate.IdentityCertificate;
+import net.named_data.jndn.security.certificate.PublicKey;
 import net.named_data.jndn.security.identity.AndroidSqlite3IdentityStorage;
 import net.named_data.jndn.security.identity.FilePrivateKeyStorage;
 import net.named_data.jndn.security.identity.IdentityManager;
 import net.named_data.jndn.security.identity.IdentityStorage;
 import net.named_data.jndn.security.identity.PrivateKeyStorage;
 import net.named_data.jndn.util.Blob;
-import net.named_data.jndn.security.certificate.PublicKey;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
+import java.util.UUID;
+
+// For getting IMEI
+// For getting Android ID: This ID will change upon factory reset, and can be changed in rooted phones
+//import android.provider.Settings.Secure;
 
 public class InstallCertificate extends AppCompatActivity {
 
@@ -119,6 +115,7 @@ public class InstallCertificate extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("cert", response);
                         byte[] decoded = Base64.decode(response, Base64.DEFAULT);
                         Blob blob = new Blob(decoded);
                         Data data = new Data();
@@ -156,11 +153,13 @@ public class InstallCertificate extends AppCompatActivity {
                             }
 
                             // Upon successful user identity request, try generating device identity
-                            try {
-                                generateAndInstallDeviceCertificate(identityName, certificate.getName());
-                            } catch (SecurityException e) {
-                                Log.e(getResources().getString(R.string.app_name), e.getMessage());
-                            }
+                            // TODO: device identity is not used as for now
+//                            try {
+//                                generateAndInstallDeviceCertificate(identityName, certificate.getName());
+//                            } catch (SecurityException e) {
+//                                Log.e("Identity Manager", "the first place");
+//                                Log.e(getResources().getString(R.string.app_name), e.getMessage());
+//                            }
 
                             String hint = "Certificate installed: " + certificate.getName().toUri();
                             TextView hintText = (TextView) findViewById(R.id.step4Hint);
