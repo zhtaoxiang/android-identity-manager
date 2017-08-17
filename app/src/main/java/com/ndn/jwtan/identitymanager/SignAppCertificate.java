@@ -26,6 +26,7 @@ import net.named_data.jndn.security.identity.IdentityStorage;
 import net.named_data.jndn.security.identity.PrivateKeyStorage;
 import net.named_data.jndn.security.policy.SelfVerifyPolicyManager;
 import net.named_data.jndn.util.Blob;
+import net.named_data.jndn.util.CommandInterestGenerator;
 
 import static android.content.ContentValues.TAG;
 
@@ -145,7 +146,8 @@ public class SignAppCertificate extends Activity {
         Interest remotePrefixRegisterInterest = new Interest(remotePrefixRegisterPrefix);
         Log.d("registerRemotePrefix", "try to register " + prefix);
         try {
-            keyChain.sign(remotePrefixRegisterInterest, keyChain.getDefaultCertificateName());
+            CommandInterestGenerator cmg = new CommandInterestGenerator();
+            cmg.generate(remotePrefixRegisterInterest, keyChain, keyChain.getDefaultCertificateName());
             face.expressInterest(remotePrefixRegisterInterest, new OnData() {
                 @Override
                 public void onData(Interest interest, Data data) {
