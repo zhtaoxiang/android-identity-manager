@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/out"
-    android:weightSum="3"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent" >
+    android:weightSum="3">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_margin="10dp">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab0"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/fab0"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:tag="empty"
-                    android:onClick="generateOrViewIdentity" />
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv0"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -52,32 +52,33 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab1"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab1"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="empty"
-                    android:layout_centerInParent="true"
-                    android:onClick="generateOrViewIdentity"/>
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -86,41 +87,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_margin="10dp">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab2"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab2"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="empty"
-                    android:layout_centerInParent="true"
-                    android:onClick="generateOrViewIdentity"/>
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -128,32 +130,33 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab3"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab3"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="empty"
-                    android:layout_centerInParent="true"
-                    android:onClick="generateOrViewIdentity"/>
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv3"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -162,41 +165,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_margin="10dp">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab4"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab4"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="empty"
-                    android:layout_centerInParent="true"
-                    android:onClick="generateOrViewIdentity"/>
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv4"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -204,32 +208,33 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:weightSum="1"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/fab5"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab5"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:tag="empty"
-                    android:layout_centerInParent="true"
-                    android:onClick="generateOrViewIdentity"/>
-            </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"
+                android:onClick="generateOrViewIdentity"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_button_round"
+                android:tag="empty" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2">
+
                 <TextView
                     android:id="@+id/tv5"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create new ID"
                     android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="Create new ID" />
             </RelativeLayout>
         </LinearLayout>
 
