@@ -19,14 +19,14 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_weight="1"
-            android:onClick="tab1Click" />
+            android:onClick="backImage" />
 
         <Button
             android:id="@+id/submitEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/submit"
-            android:onClick="submitEmail"
+            android:onClick="submitImage"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_weight="1" />

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -70,8 +71,8 @@ public class GenerateToken extends AppCompatActivity {
                 (getSupportFragmentManager(), tabLayout.getTabCount(), getResources().getString(R.string.token_success), false);
 
         // Disabling clicking on tabs to switch
-        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
-        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+        LinearLayout tabStrip = ((LinearLayout) tabLayout.getChildAt(0));
+        for (int i = 0; i < tabStrip.getChildCount(); i++) {
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -138,7 +139,7 @@ public class GenerateToken extends AppCompatActivity {
     }
     */
 
-    public void submitEmail(View view) {
+    public void submitImage(View view) {
         Button button = (Button) findViewById(R.id.submitEmail);
         button.setEnabled(false);
 
@@ -160,7 +161,7 @@ public class GenerateToken extends AppCompatActivity {
                 CustomImageViewer oriV = (CustomImageViewer) findViewById(this.selectedImageViewId);
                 imageViewClick(oriV);
             }
-            this.picture = (String)v.getTag();
+            this.picture = (String) v.getTag();
             this.selectedImageViewId = v.getId();
         } else {
             v.getDrawable().setColorFilter(0xFF000000, PorterDuff.Mode.MULTIPLY);
@@ -286,8 +287,7 @@ public class GenerateToken extends AppCompatActivity {
                             if (oriV != null) {
                                 imageViewClick(oriV);
                             }
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             Log.e(getResources().getString(R.string.app_name), e.getMessage());
 
                             finish();
@@ -306,8 +306,8 @@ public class GenerateToken extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
 
                 return params;
@@ -316,5 +316,9 @@ public class GenerateToken extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    public void backImage(View view) {
+        tab1Click(view);
     }
 }

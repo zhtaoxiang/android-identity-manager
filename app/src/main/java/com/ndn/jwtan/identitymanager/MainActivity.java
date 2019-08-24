@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,18 +35,37 @@ public class MainActivity extends AppCompatActivity {
             usage = "authorize";
         }
 
-        Log.e("zhehao", usage);
+        Timber.e(usage);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupTimber();
         //getIdentities();
+    }
+
+    private void setupTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree() {
+                @Override
+                protected  String createStackElementTag(StackTraceElement element) {
+                    return "Log: " + element.getLineNumber() + " : "+super.createStackElementTag(element) + " : "+ element.getMethodName();
+                }
+            });
+        } else {
+            Timber.plant(new Timber.DebugTree() {
+                @Override
+                protected  String createStackElementTag(StackTraceElement element) {
+                    return super.createStackElementTag(element) + " : "+ element.getMethodName();
+                }
+            });
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        Log.e("zhehao", "on resume");
+        Timber.v("on resume");
         getIdentities();
     }
 
@@ -73,9 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user clicks the generate a new identity button */
     public void generateOrViewIdentity(View view) {
-        FloatingActionButton fab = (FloatingActionButton) view;
+        ImageButton fab = (ImageButton) view;
         if (fab.getTag(R.string.tags_if_taken) == slotTaken) {
-            if (usage == "authorize") {
+            if (usage.equals("authorize")) {
+                Timber.i("here");
                 //authorizeApp((String) fab.getTag(R.string.tags_id_name));
                 Intent resultIntent = new Intent();
                 // Although we have a device ID, the user ID is used to sign app ID
@@ -83,10 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             } else {
+                Timber.i("here");
                 traceApplications((String)fab.getTag(R.string.tags_id_name));
             }
         } else {
-            Intent intent = new Intent(this, GenerateToken.class);
+            Timber.i("here");
+            Intent intent = new Intent(this, GenerateActivity.class);
             startActivity(intent);
         }
     }
@@ -104,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     // Although we have a device ID, the user ID is used to sign app ID
     public void getIdentities() {
         // Establish Database connection
+        Timber.i("here");
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -135,12 +159,14 @@ public class MainActivity extends AppCompatActivity {
         Integer idx = 0;
         // temporary maxIdx for static layout
         int maxIdx = 6;
+        Timber.i(c.getCount()+"");
         while (c.moveToNext() && idx < maxIdx) {
+            Timber.i("here");
             String tvId = "tv" + idx.toString();
             TextView tv = (TextView) this.findViewById(getResources().getIdentifier(tvId, "id", getPackageName()));
             tv.setText(c.getString(1));
             String fabId = "fab" + idx.toString();
-            FloatingActionButton fab = (FloatingActionButton) this.findViewById(getResources().getIdentifier(fabId, "id", getPackageName()));
+            ImageButton fab = (ImageButton) this.findViewById(getResources().getIdentifier(fabId, "id", getPackageName()));
             if (c.getString(2) != "") {
                 fab.setImageResource(getResources().getIdentifier(c.getString(2), "drawable", getPackageName()));
             }

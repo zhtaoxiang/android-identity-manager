@@ -1,82 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ndn.jwtan.identitymanager" >
+    package="com.ndn.jwtan.identitymanager">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- For getting device IMEI if needed -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Read from gallery, not implemented for now -->
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- For getting device IMEI if needed -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Read from gallery, not implemented for now -->
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".GenerateActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.ndn.jwtan.identitymanager.AUTHORIZE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GenerateToken"
             android:label="@string/title_activity_generate_token"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+        <activity
+            android:name=".GenerateNDNToken"
+            android:label="@string/title_activity_generate_token"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
         <activity
             android:name=".GenerateIdentity"
             android:label="@string/title_activity_generate_identity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
         <activity
-            android:name="com.ndn.jwtan.identitymanager.UriHandler"
-            android:label="@string/title_activity_uri_handler" >
+            android:name=".UriHandler"
+            android:label="@string/title_activity_uri_handler">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="http" android:host="ndncert.named-data.net"/>
-                <data android:scheme="http" android:host="memoria.ndn.ucla.edu"/>
-                <data android:scheme="http" android:host="memoria.ndn.ucla.edu:5001"/>
-
-                <data android:scheme="https" android:host="ndncert.named-data.net"/>
-                <data android:scheme="https" android:host="memoria.ndn.ucla.edu"/>
-                <data android:scheme="https" android:host="memoria.ndn.ucla.edu:5001"/>
-                <data android:host="ndncert.named-data.net"/>
-                <data android:host="memoria.ndn.ucla.edu"/>
-                <data android:host="memoria.ndn.ucla.edu:5001"/>
+                <data
+                    android:host="ndncert.named-data.net"
+                    android:scheme="http" />
+                <data
+                    android:host="memoria.ndn.ucla.edu"
+                    android:scheme="http" />
+                <data
+                    android:host="memoria.ndn.ucla.edu:5001"
+                    android:scheme="http" />
+                <data
+                    android:host="ndncert.named-data.net"
+                    android:scheme="https" />
+                <data
+                    android:host="memoria.ndn.ucla.edu"
+                    android:scheme="https" />
+                <data
+                    android:host="memoria.ndn.ucla.edu:5001"
+                    android:scheme="https" />
+                <data android:host="ndncert.named-data.net" />
+                <data android:host="memoria.ndn.ucla.edu" />
+                <data android:host="memoria.ndn.ucla.edu:5001" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DisplayIdentities"
             android:label="@string/title_activity_display_identities"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
-        </activity>
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"></activity>
         <activity
             android:name=".InstallCertificate"
             android:label="@string/title_activity_install_certificate"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
         <activity
             android:name=".DisplayApps"
             android:label="@string/title_activity_display_apps"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
-        </activity>
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"></activity>
         <activity
             android:name=".SignAppCertificate"
             android:label="@string/title_activity_sign_certificate"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
             <intent-filter>
                 <action android:name="com.ndn.jwtan.identitymanager.SIGN_CERTIFICATE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

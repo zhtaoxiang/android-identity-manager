@@ -23,6 +23,8 @@
     <string name="button_continue">Continue</string>
     <string name="button_back">Back</string>
 
+    <string name="ndncert_success">Successfully downloaded the cert.</string>
+
     <string name="title_activity_submit_identity_request">Submit Identity Request</string>
     <string name="name">Full Name:</string>
     <string name="homepage">Homepage URL (optional):</string>
