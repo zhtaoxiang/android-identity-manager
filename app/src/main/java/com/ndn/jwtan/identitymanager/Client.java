@@ -60,7 +60,7 @@ public class Client {
 
     String m_challengeStatus = "";
     String m_challengeType = "";
-    String m_certId = "";
+
     List<String> m_challengeList = new ArrayList<>();
     boolean m_isCertInstalled = false;
 
@@ -73,7 +73,7 @@ public class Client {
 
     void onProbeResponse(Data reply) {
         if (!VerificationHelpers.verifyDataSignature(reply, m_ca.getAnchor())) {
-            Timber.i("Cannot verify data signature from " + m_ca.m_caName.toUri());
+            Timber.d("Cannot verify data signature from " + m_ca.m_caName.toUri());
             return;
         }
 
@@ -82,7 +82,7 @@ public class Client {
             contentJson = getJsonFromData(reply);
         } catch (JSONException e) {
             e.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
 
         // read the available name and put it into the state
@@ -91,29 +91,22 @@ public class Client {
             nameUri = contentJson.getString(JSON_CA_NAME);
         } catch (JSONException e) {
             e.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
-        if (nameUri != "") {
+        if (!nameUri.equals("")) {
             m_identityName = new Name(nameUri);
         } else {
-            Timber.i("The JSON_CA_NAME is empty.");
+            Timber.d("The JSON_CA_NAME is empty.");
         }
 
     }
 
-    Interest generateProbeInterest(final ClientCaItem ca, final String probeInfo) {
+    Interest generateProbeInterest(final ClientCaItem ca, final JSONObject paramJson) {
         Name interestName = new Name(ca.m_caName);
         interestName.append("CA").append("_PROBE");
         Interest interest = new Interest(interestName);
         interest.setMustBeFresh(true);
         interest.setCanBePrefix(false);
-        JSONObject paramJson = null;
-        try {
-            paramJson = genProbeRequestJson(ca, probeInfo);
-        } catch (JSONException e) {
-            Timber.e("error");
-            e.printStackTrace();
-        }
         Blob blob = new Blob(paramJson.toString().getBytes());
 
         interest.setApplicationParameters(blob);
@@ -122,21 +115,6 @@ public class Client {
         // update local state
         m_ca = ca;
         return interest;
-    }
-
-    final JSONObject genProbeRequestJson(final ClientCaItem ca, final String probeInfo) throws JSONException {
-        JSONObject root = new JSONObject();
-//        std::vector<String> fields = parseProbeComponents(ca.m_probe);
-//        std::vector<String> arguments  = parseProbeComponents(probeInfo);;
-
-//        if (arguments.size() != fields.size()) {
-//            BOOST_THROW_EXCEPTION(Error("Error in genProbeRequestJson: argument list does not match field list in the config file."));
-//        }
-//        for (int i = 0; i < fields.size(); ++i) {
-//            root.put(fields.at(i), arguments.at(i));
-        root.put(ca.m_probe, probeInfo);
-//        }
-        return root;
     }
 
     public JSONObject getJsonFromData(Data data) throws JSONException {
@@ -209,7 +187,7 @@ public class Client {
         try {
             certRequest = new CertificateV2(data);
         } catch (CertificateV2.Error error) {
-            Timber.i("error");
+            Timber.e("error");
             error.printStackTrace();
         }
         SigningInfo signingInfo = new SigningInfo(SigningInfo.SignerType.KEY, m_key.getName());
@@ -218,7 +196,7 @@ public class Client {
             keyChain.sign(certRequest, signingInfo);
         } catch (Exception er) {
             er.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
 
         // generate Interest packet
@@ -238,7 +216,7 @@ public class Client {
             interest.setApplicationParameters(paramFromJson(genNewRequestJson("AjZd215DZTpJ25ZI9UTx/FljN2dKTcKMlZqALc9mCxu7", certRequest, probeToken)));
         } catch (Exception e) {
             e.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
 
         // sign the Interest packet
@@ -246,7 +224,7 @@ public class Client {
             keyChain.sign(interest, new SigningInfo(SigningInfo.SignerType.KEY, m_key.getName()));
         } catch (Exception er) {
             er.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
         return interest;
     }
@@ -275,7 +253,7 @@ public class Client {
     List<String>
     onNewResponse(final Data reply) throws JSONException {
         if (!VerificationHelpers.verifyDataSignature(reply, m_ca.getAnchor())) {
-            Timber.i("Cannot verify data signature from " + m_ca.m_caName.toUri());
+            Timber.d("Cannot verify data signature from " + m_ca.m_caName.toUri());
             return new ArrayList<>();
         }
 
@@ -284,7 +262,7 @@ public class Client {
             contentJson = getJsonFromData(reply);
         } catch (JSONException e) {
             e.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
 
         // ECDH
@@ -295,8 +273,7 @@ public class Client {
 //        std::memcpy (salt, &saltInt, sizeof(saltInt));
 //        byte[] result = Base64.decode(peerKeyBase64Str, 0);
 
-//        ecdhState.deriveSecret(result)
-        ;
+//        ecdhState.deriveSecret(result);
 //        m_ecdh.deriveSecret(peerKeyBase64Str);
 
 //        HKDF
@@ -326,7 +303,7 @@ public class Client {
         interest.setCanBePrefix(false);
 
         // encrypt the Interest parameters
-        String payload = paramJson.toString();
+//        String payload = paramJson.toString();
 
 //        Blob paramBlock = genEncBlock(tlv::ApplicationParameters, m_ecdh.context.sharedSecret, m_ecdh.context.sharedSecretLen,
 //                ( final long*)payload.c_str(), payload.size());
@@ -337,7 +314,7 @@ public class Client {
             keyChain.sign(interest, signingInfo);
         } catch (Exception er) {
             er.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
         return interest;
     }
@@ -358,7 +335,7 @@ public class Client {
 
     public void onChallengeResponse(Data data) throws JSONException {
         if (!VerificationHelpers.verifyDataSignature(data, m_ca.getAnchor())) {
-            Timber.i("Cannot verify data signature from " + m_ca.m_caName.toUri());
+            Timber.d("Cannot verify data signature from " + m_ca.m_caName.toUri());
             return;
         }
 //        byte[] result = parseEncBlock(m_ecdh.context.sharedSecret, m_ecdh.context.sharedSecretLen, reply.getContent());
@@ -386,7 +363,7 @@ public class Client {
 
     public Interest generateProbeInfoInterest(Name name) {
         Name interestName = new Name(name);
-        if (interestName.getPrefix(-1).toString() != "CA")
+        if (!interestName.getPrefix(-1).toString().equals("CA"))
             interestName.append("CA");
         interestName.append("_PROBE").append("INFO");
         Interest interest = new Interest(interestName);
@@ -402,7 +379,7 @@ public class Client {
             caItem = extractCaItem(contentJson);
         } catch (EncodingException e) {
             e.printStackTrace();
-            Timber.i("error");
+            Timber.e("error");
         }
 
 //        // update the local config
@@ -418,8 +395,8 @@ public class Client {
 //        }
 
         // verify the probe Data's sig
-        if (!VerificationHelpers.verifyDataSignature(data, m_ca.getAnchor())) {
-            Timber.i("Cannot verify data signature from " + m_ca.m_caName.toUri());
+        if (!VerificationHelpers.verifyDataSignature(data, caItem.getAnchor())) {
+            Timber.d("Cannot verify data signature from " + m_ca.m_caName.toUri());
             return;
         }
     }
@@ -431,23 +408,23 @@ public class Client {
         item.m_probe = configSection.getString("probe");
         String ss = configSection.getString("certificate");
         item.m_anchor = new CertificateV2();
-        item.m_anchor.wireDecode(ByteBuffer.wrap(ss.getBytes()));
+        item.m_anchor.wireDecode(ByteBuffer.wrap(Base64.decode(ss, 0)));
 
         return item;
     }
 
-    public CertificateV2 onDownloadResponse(Data data) {
+    CertificateV2 onDownloadResponse(Data data) {
         try {
             CertificateV2 cert = new CertificateV2();
             cert.wireDecode(ByteBuffer.wrap(data.getContent().getImmutableArray()));
 
             keyChain.addCertificate(m_key, cert);
-            Timber.i("Got DOWNLOAD response and installed the cert " + cert.getName());
+            Timber.d("Got DOWNLOAD response and installed the cert " + cert.getName());
             m_isCertInstalled = true;
             return cert;
         } catch (Exception e) {
             e.printStackTrace();
-            Timber.i("Cannot add replied certificate into the keychain ");
+            Timber.d("Cannot add replied certificate into the keychain ");
             return null;
         }
     }

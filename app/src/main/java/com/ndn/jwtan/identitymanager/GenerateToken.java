@@ -139,7 +139,7 @@ public class GenerateToken extends AppCompatActivity {
     }
     */
 
-    public void submitEmail(View view) {
+    public void submitImage(View view) {
         Button button = (Button) findViewById(R.id.submitEmail);
         button.setEnabled(false);
 
@@ -316,5 +316,9 @@ public class GenerateToken extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    public void backImage(View view) {
+        tab1Click(view);
     }
 }
